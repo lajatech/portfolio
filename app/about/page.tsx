@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Nav from "@/components/layout/Nav";
 import Footer from "@/components/layout/Footer";
 import ScrollReveal from "@/components/ui/ScrollReveal";
@@ -99,26 +100,38 @@ export default function AboutPage() {
                 </p>
               </div>
 
-              {/* Right — photo placeholder */}
+              {/* Right — photo */}
               <div>
                 <div
                   style={{
-                    aspectRatio: "3/4",
-                    background: "var(--char)",
+                    position: "relative",
+                    aspectRatio: "2/3",
                     border: "1px solid var(--ash)",
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    gap: "var(--s-3)",
+                    overflow: "hidden",
                   }}
                 >
-                  <div className="t-meta" style={{ color: "var(--mist)" }}>
-                    Abdulmuiz Adelaja
-                  </div>
-                  <div className="t-meta" style={{ color: "var(--fog)" }}>
-                    Photo — to be provided
-                  </div>
+                  <Image
+                    src="/images/abdulmuiz.jpg"
+                    alt="Abdulmuiz Adelaja — Senior Product Designer"
+                    fill
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    style={{
+                      objectFit: "cover",
+                      objectPosition: "center top",
+                      filter: "grayscale(100%) contrast(1.05)",
+                    }}
+                    priority
+                  />
+                  {/* void overlay so it reads as part of the dark canvas */}
+                  <div
+                    aria-hidden="true"
+                    style={{
+                      position: "absolute",
+                      inset: 0,
+                      background: "linear-gradient(to bottom, transparent 60%, var(--void) 100%)",
+                      pointerEvents: "none",
+                    }}
+                  />
                 </div>
               </div>
             </div>
