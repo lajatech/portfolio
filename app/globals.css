@@ -308,6 +308,59 @@ body {
   border-top: 1px solid var(--ash);
 }
 
+/* ─── Responsive split layouts ───────────────────────────────────── */
+/* Used across case studies and about page.
+   All inline display:grid has been removed from components so these
+   classes control layout at every breakpoint. */
+
+.resp-split {           /* 1/3 label · 2/3 content */
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: var(--s-9);
+  align-items: start;
+}
+.resp-halves {          /* equal two columns */
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--s-9);
+}
+.resp-timeline-row {    /* 200px label · content */
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: var(--s-6);
+  align-items: start;
+}
+.resp-results {         /* dynamic n-col, collapses on mobile */
+  display: grid;
+  gap: 0;
+}
+
+@media (max-width: 768px) {
+  .resp-split,
+  .resp-halves {
+    display: flex;
+    flex-direction: column;
+    gap: var(--s-6);
+  }
+  .resp-timeline-row {
+    display: flex;
+    flex-direction: column;
+    gap: var(--s-2);
+  }
+  .resp-results {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+  /* Force full-width on any stray fixed-width containers */
+  .container-wide * { max-width: 100%; }
+}
+
+@media (max-width: 480px) {
+  .resp-results {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+
 /* ─── Pill / tag ─────────────────────────────────────────────────── */
 .pill {
   font-family: var(--font-mono);

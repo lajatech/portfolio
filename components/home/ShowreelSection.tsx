@@ -30,21 +30,18 @@ export default function ShowreelSection() {
           </div>
         </ScrollReveal>
 
-        {/* Showreel — centred, constrained, auto-plays as GIF */}
+        {/* Showreel — landscape crop hides watermark, grain reduces distraction */}
         <ScrollReveal delay={0.08}>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-            }}
-          >
+          <div style={{ display: "flex", justifyContent: "center" }}>
             <div
+              className="grain"
               style={{
                 position: "relative",
                 width: "100%",
-                maxWidth: "640px",
-                border: "1px solid var(--ash)",
+                maxWidth: "720px",
+                aspectRatio: "4/3",   /* landscape crop — square GIF, top portion shown */
                 overflow: "hidden",
+                border: "1px solid var(--ash)",
                 background: "var(--char)",
               }}
             >
@@ -53,13 +50,16 @@ export default function ShowreelSection() {
                 src={SHOWREEL_GIF}
                 alt="Làjà — Design showreel, selected product work 2019–2025"
                 style={{
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
                   width: "100%",
                   height: "auto",
                   display: "block",
                 }}
                 loading="lazy"
               />
-              {/* Subtle void overlay on bottom edge to ground it */}
+              {/* Bottom edge fade to mask any residual branding */}
               <div
                 aria-hidden="true"
                 style={{
@@ -67,10 +67,10 @@ export default function ShowreelSection() {
                   bottom: 0,
                   left: 0,
                   right: 0,
-                  height: "80px",
-                  background:
-                    "linear-gradient(to bottom, transparent, rgba(8,9,11,0.5))",
+                  height: "60px",
+                  background: "linear-gradient(to bottom, transparent, var(--void))",
                   pointerEvents: "none",
+                  zIndex: 2,
                 }}
               />
             </div>
@@ -81,11 +81,7 @@ export default function ShowreelSection() {
         <ScrollReveal delay={0.14}>
           <p
             className="t-meta"
-            style={{
-              color: "var(--fog)",
-              textAlign: "center",
-              marginTop: "var(--s-4)",
-            }}
+            style={{ color: "var(--fog)", textAlign: "center", marginTop: "var(--s-4)" }}
           >
             Fintech · SaaS · E-commerce · Sports · Energy
           </p>

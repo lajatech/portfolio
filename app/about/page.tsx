@@ -46,13 +46,8 @@ export default function AboutPage() {
 
           <div className="container-wide relative" style={{ zIndex: 2 }}>
             <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "1fr 1fr",
-                gap: "var(--s-9)",
-                alignItems: "start",
-              }}
-              className="flex flex-col lg:grid"
+              className="resp-halves"
+              style={{ alignItems: "start" }}
             >
               {/* Left — text */}
               <div>
@@ -190,12 +185,7 @@ export default function AboutPage() {
         >
           <div className="container-wide">
             <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "1fr 2fr",
-                gap: "var(--s-9)",
-              }}
-              className="flex flex-col lg:grid"
+              className="resp-split"
             >
               <ScrollReveal>
                 <span className="t-meta" style={{ color: "var(--mist)" }}>
@@ -265,13 +255,10 @@ export default function AboutPage() {
               {careerTimeline.map((item, i) => (
                 <ScrollReveal key={`${item.company}-${item.period}`} delay={i * 0.06}>
                   <div
+                    className="resp-timeline-row"
                     style={{
-                      display: "grid",
-                      gridTemplateColumns: "200px 1fr",
-                      gap: "var(--s-6)",
                       padding: "var(--s-5) 0",
                       borderBottom: i < careerTimeline.length - 1 ? "1px solid var(--ash)" : "none",
-                      alignItems: "start",
                     }}
                   >
                     <div>
@@ -314,14 +301,7 @@ export default function AboutPage() {
           }}
         >
           <div className="container-wide">
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "1fr 1fr",
-                gap: "var(--s-9)",
-              }}
-              className="flex flex-col lg:grid"
-            >
+            <div className="resp-halves">
               {/* Education */}
               <ScrollReveal>
                 <div>

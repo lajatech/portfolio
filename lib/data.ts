@@ -219,8 +219,8 @@ export const caseStudies: CaseStudy[] = [
       },
     ],
     results: [
-      { value: "15+", label: "AI agents and workflows designed" },
-      { value: "2", label: "core gamification systems built" },
+      { value: "2",   label: "gamification systems designed — points engine + trivia" },
+      { value: "1",   label: "design system built from scratch for the platform" },
     ],
     nextSlug: "workergen",
     nextTitle: "Workergen AI Marketplace",

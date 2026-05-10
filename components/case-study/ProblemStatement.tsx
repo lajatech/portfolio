@@ -11,15 +11,7 @@ export default function ProblemStatement({ cs }: { cs: CaseStudy }) {
       }}
     >
       <div className="container-wide">
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "1fr 2fr",
-            gap: "var(--s-9)",
-            alignItems: "start",
-          }}
-          className="flex-col md:grid"
-        >
+        <div className="resp-split">
           <ScrollReveal>
             <span className="t-meta" style={{ color: "var(--mist)" }}>
               The problem
@@ -30,10 +22,7 @@ export default function ProblemStatement({ cs }: { cs: CaseStudy }) {
             <ScrollReveal delay={0.08}>
               <p
                 className="t-display-sm"
-                style={{
-                  color: "var(--veil)",
-                  marginBottom: "var(--s-6)",
-                }}
+                style={{ color: "var(--veil)", marginBottom: "var(--s-6)" }}
               >
                 {cs.problem}
               </p>
@@ -41,10 +30,7 @@ export default function ProblemStatement({ cs }: { cs: CaseStudy }) {
             <ScrollReveal delay={0.16}>
               <p
                 className="t-body-lg"
-                style={{
-                  color: "var(--bone)",
-                  maxWidth: "640px",
-                }}
+                style={{ color: "var(--bone)", maxWidth: "640px" }}
               >
                 {cs.problemDetail}
               </p>

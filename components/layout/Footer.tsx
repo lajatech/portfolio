@@ -22,7 +22,7 @@ export default function Footer() {
               className="t-meta"
               style={{ color: "var(--bone)" }}
             >
-              © Là.já · Lagos / remote · {year}
+              © Làjà · Lagos / remote · {year}
             </span>
           </div>
 

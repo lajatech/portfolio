@@ -42,10 +42,9 @@ export default function ResultsSection({ cs }: { cs: CaseStudy }) {
         </ScrollReveal>
 
         <div
+          className="resp-results"
           style={{
-            display: "grid",
             gridTemplateColumns: `repeat(${Math.min(cs.results.length, 3)}, 1fr)`,
-            gap: "0",
           }}
         >
           {cs.results.map((r, i) => (
@@ -54,18 +53,23 @@ export default function ResultsSection({ cs }: { cs: CaseStudy }) {
                 style={{
                   padding: "var(--s-7) var(--s-6)",
                   borderRight: i < cs.results.length - 1 ? "1px solid var(--ash)" : "none",
+                  minWidth: 0,
                 }}
               >
                 <div
-                  className="t-display-lg"
-                  style={{ color: "var(--veil)", marginBottom: "var(--s-3)", lineHeight: 1 }}
+                  style={{
+                    fontFamily: "var(--font-display)",
+                    fontSize: "clamp(36px, 4vw, 76px)",
+                    color: "var(--veil)",
+                    marginBottom: "var(--s-3)",
+                    lineHeight: 1,
+                    letterSpacing: "-0.03em",
+                    overflow: "hidden",
+                  }}
                 >
                   <MetricCounter value={r.value} />
                 </div>
-                <div
-                  className="t-body"
-                  style={{ color: "var(--bone)" }}
-                >
+                <div className="t-body" style={{ color: "var(--bone)" }}>
                   {r.label}
                 </div>
               </div>
