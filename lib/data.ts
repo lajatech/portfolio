@@ -272,41 +272,41 @@ export const caseStudies: CaseStudy[] = [
 
 export const snapshotProjects = [
   {
-    title: "Vescrow",
-    category: "Brand Identity",
-    year: "2024",
+    title: "DukaCards",
+    category: "App Design",
+    year: "2025",
+    image: "/images/snapshots/dukacards.jpg",
   },
   {
     title: "Quiver Finance",
     category: "Product Design · Gamification",
     year: "2024",
     note: "5.1% → 18% retention in 8 weeks",
+    image: "/images/snapshots/quiver.jpg",
   },
   {
-    title: "DukaCards",
-    category: "App Design",
-    year: "2025",
+    title: "Vescrow",
+    category: "Brand Identity",
+    year: "2024",
+    image: "https://cdn.prod.website-files.com/6378c5ec8c7bd812dfcbaaab/6382b8ee38bb0d0616dd3913_smartmockups_layyml7w.jpg",
+  },
+  {
+    title: "E-Rider",
+    category: "App Design + Integration",
+    year: "2023",
+    image: "https://cdn.prod.website-files.com/6378c5ec8c7bd812dfcbaaab/65db8e8e09d579631b714b94_7%20UI%20Screens.png",
+  },
+  {
+    title: "BruttForce Gallery",
+    category: "Website Redesign + Development",
+    year: "2023",
+    image: "https://cdn.prod.website-files.com/6378c5ec8c7bd812dfcbaaab/65dc34237b45fb941d3210b7_Brutt%20force%20Gallery%20Website%20design%205.png",
   },
   {
     title: "Classbox",
     category: "E-Learning Platform",
     year: "2025",
     note: "Lagos State Government · NDA cleared",
-  },
-  {
-    title: "E-Rider",
-    category: "App Design + Integration",
-    year: "2023",
-  },
-  {
-    title: "Diedra",
-    category: "Web Design + Webflow + Brand Identity",
-    year: "2023",
-  },
-  {
-    title: "BruttForce Gallery",
-    category: "Website Redesign + Development",
-    year: "2023",
   },
 ];
 
