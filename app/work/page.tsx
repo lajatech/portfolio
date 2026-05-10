@@ -29,7 +29,7 @@ export default function WorkPage() {
               className="t-meta"
               style={{ color: "var(--mist)", display: "block", marginBottom: "var(--s-6)" }}
             >
-              Work — 2019–Now
+              Work
             </span>
             <h1
               className="t-display-lg"

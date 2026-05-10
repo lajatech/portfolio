@@ -107,7 +107,7 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.62, delay: 0.5, ease }}
         >
-          Outcomes-driven design. Every decision traced to a number — conversion,
+          Outcomes-driven design. Every decision traced to a number: conversion,
           retention, revenue. Currently leading at Volta Charger, Gold Coast.
         </motion.p>
 

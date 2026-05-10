@@ -19,7 +19,7 @@ export default function FeaturedProjects() {
             className="t-meta"
             style={{ color: "var(--mist)", display: "block", marginBottom: "var(--s-9)" }}
           >
-            Case studies — deep & mini
+            Case studies
           </span>
         </ScrollReveal>
 

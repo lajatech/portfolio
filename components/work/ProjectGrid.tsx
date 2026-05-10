@@ -17,7 +17,7 @@ export default function ProjectGrid() {
             className="t-meta"
             style={{ color: "var(--mist)", display: "block", marginBottom: "var(--s-7)" }}
           >
-            More work — snapshots
+            More work
           </span>
           <p
             className="t-body-sm"
@@ -27,7 +27,7 @@ export default function ProjectGrid() {
               marginBottom: "var(--s-7)",
             }}
           >
-            — Imagery pending. Placeholders will be replaced with actual project visuals.
+            Imagery pending client visuals.
           </p>
         </ScrollReveal>
 

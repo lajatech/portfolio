@@ -56,7 +56,7 @@ export default function SelectedWork() {
             style={{ marginBottom: "var(--s-9)" }}
           >
             <span className="t-meta" style={{ color: "var(--mist)" }}>
-              Selected work — 2021—Now
+            Selected work
             </span>
             <Link
               href="/work"
@@ -68,7 +68,19 @@ export default function SelectedWork() {
           </div>
         </ScrollReveal>
 
-        {/* Project list — editorial, not a grid */}
+        {/* Project list */}
+        <style>{`
+          .work-article {
+            display: grid;
+            grid-template-columns: 80px 1fr auto;
+            gap: var(--s-6);
+            align-items: start;
+          }
+          @media (max-width: 640px) {
+            .work-article { grid-template-columns: 48px 1fr; }
+            .work-metric  { display: none; }
+          }
+        `}</style>
         <div style={{ display: "flex", flexDirection: "column" }}>
           {featured.map((project, i) => (
             <ScrollReveal key={project.slug} delay={i * 0.08}>
@@ -78,13 +90,10 @@ export default function SelectedWork() {
                 style={{ textDecoration: "none" }}
               >
                 <article
+                  className="work-article"
                   style={{
                     padding: "var(--s-7) 0",
                     borderBottom: "1px solid var(--ash)",
-                    display: "grid",
-                    gridTemplateColumns: "80px 1fr auto",
-                    alignItems: "start",
-                    gap: "var(--s-6)",
                     transition: "background 180ms var(--ease-eerie)",
                   }}
                 >
@@ -127,9 +136,9 @@ export default function SelectedWork() {
                     </div>
                   </div>
 
-                  {/* Right — metric + arrow */}
+                  {/* Right — metric + arrow (hidden on mobile via .work-metric) */}
                   <div
-                    className="flex flex-col items-end"
+                    className="work-metric flex flex-col items-end"
                     style={{ gap: "var(--s-2)", textAlign: "right" }}
                   >
                     <div>

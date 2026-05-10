@@ -81,7 +81,7 @@ export default function AboutPage() {
                   style={{ color: "var(--bone)", maxWidth: "480px", marginBottom: "var(--s-5)" }}
                 >
                   Senior Product Designer and UX Lead. I trace every design decision to a
-                  business outcome — conversion, retention, revenue. Not as a methodology.
+                  business outcome: conversion, retention, revenue. Not as a methodology.
                   As a reflex.
                 </p>
                 <p
@@ -89,7 +89,7 @@ export default function AboutPage() {
                   style={{ color: "var(--bone)", maxWidth: "480px" }}
                 >
                   This started with a Statistics degree from FUTA in 2021. The numbers
-                  habit never left — it just moved from regression tables to design systems
+                  habit never left; it just moved from regression tables to design systems
                   and KPI dashboards. Six years and 80+ projects later, the approach is the
                   same: form a hypothesis, design the intervention, measure what moves.
                 </p>
@@ -197,7 +197,7 @@ export default function AboutPage() {
                 {[
                   {
                     heading: "Design is a hypothesis.",
-                    body: "Every design decision is a bet — I trace where that bet is, what it's predicting, and how we'll know if it lands. A/B testing, conversion tracking, retention curves. The design process and the measurement process are the same process.",
+                    body: "Every design decision is a bet. I trace where that bet is, what it's predicting, and how we'll know if it lands. A/B testing, conversion tracking, retention curves. The design process and the measurement process are the same process.",
                   },
                   {
                     heading: "The brief is a starting point, not a ceiling.",
@@ -205,7 +205,7 @@ export default function AboutPage() {
                   },
                   {
                     heading: "Systems before screens.",
-                    body: "A beautiful screen in a broken system is decoration. I start with the design system — tokens, components, patterns — because that's what makes everything else scalable, consistent, and maintainable at pace.",
+                    body: "A beautiful screen in a broken system is decoration. I start with the design system: tokens, components, patterns; because that's what makes everything else scalable, consistent, and maintainable at pace.",
                   },
                 ].map((item, i) => (
                   <ScrollReveal key={item.heading} delay={i * 0.1}>
@@ -316,7 +316,7 @@ export default function AboutPage() {
                       className="t-body"
                       style={{ color: "var(--veil)", fontWeight: 500, marginBottom: "4px" }}
                     >
-                      BTech — Statistics
+                      BTech in Statistics
                     </div>
                     <div className="t-body-sm" style={{ color: "var(--bone)" }}>
                       Federal University of Technology Akure
@@ -365,7 +365,7 @@ export default function AboutPage() {
                   </span>
                   <div style={{ borderTop: "1px solid var(--ash)", paddingTop: "var(--s-5)" }}>
                     {[
-                      "Product design — end to end",
+                      "Product design, end to end",
                       "UX research + usability testing",
                       "Design systems from scratch",
                       "Conversational UX",

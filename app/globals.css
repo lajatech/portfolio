@@ -350,8 +350,6 @@ body {
   .resp-results {
     grid-template-columns: repeat(2, 1fr) !important;
   }
-  /* Force full-width on any stray fixed-width containers */
-  .container-wide * { max-width: 100%; }
 }
 
 @media (max-width: 480px) {

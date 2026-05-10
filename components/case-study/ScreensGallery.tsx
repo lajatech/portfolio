@@ -15,23 +15,23 @@ type GalleryImage = {
 
 const galleries: Record<string, GalleryImage[]> = {
   neocash: [
-    { src: "/images/neocash/03-new-splash.png",    alt: "NeoCash new splash screen",         caption: "Splash — brand entry",     aspect: "9/19" },
+    { src: "/images/neocash/03-new-splash.png",    alt: "NeoCash new splash screen",         caption: "Splash",     aspect: "9/19" },
     { src: "/images/neocash/04-new-pre-loan.png",  alt: "NeoCash loan pre-application",      caption: "Pre-application",          aspect: "9/19" },
     { src: "/images/neocash/05-new-loan-flow.png", alt: "NeoCash conversational loan flow",  caption: "Conversational flow",      aspect: "9/19" },
     { src: "/images/neocash/06-new-dashboard.png", alt: "NeoCash new dashboard",             caption: "Dashboard",                aspect: "9/19" },
-    { src: "/images/neocash/01-old-dashboard.png", alt: "NeoCash old dashboard — before",   caption: "Before — old dashboard",   aspect: "9/19" },
-    { src: "/images/neocash/02-old-loan.png",      alt: "NeoCash old loan screen — before", caption: "Before — loan form",       aspect: "9/19" },
+    { src: "/images/neocash/01-old-dashboard.png", alt: "NeoCash old dashboard, before",   caption: "Before",   aspect: "9/19" },
+    { src: "/images/neocash/02-old-loan.png",      alt: "NeoCash old loan screen, before", caption: "Before: loan form",       aspect: "9/19" },
   ],
   estility: [
     { src: "/images/estility/web-01-hero.webp",       alt: "Estility website hero",           caption: "Website hero",            wide: true, aspect: "16/7" },
-    { src: "/images/estility/01-ui-screens.png",      alt: "Estility ecosystem UI screens",   caption: "Ecosystem — UI overview", wide: true, aspect: "16/9" },
+    { src: "/images/estility/01-ui-screens.png",      alt: "Estility ecosystem UI screens",   caption: "Ecosystem overview", wide: true, aspect: "16/9" },
     { src: "/images/estility/web-03-analytics.webp",  alt: "Estility analytics dashboard",    caption: "Analytics dashboard" },
     { src: "/images/estility/web-04-mobile.webp",     alt: "Estility mobile screens",         caption: "Mobile experience" },
     { src: "/images/estility/02-wireframes.png",      alt: "Estility wireframe process",      caption: "Wireframes" },
     { src: "/images/estility/web-05-mockup.webp",     alt: "Estility device mockup",          caption: "Device mockup" },
   ],
   profootball: [
-    { src: "/images/profootball/01-desktop-home.png",        alt: "ProFootball desktop home",      caption: "Desktop — home",        wide: true, aspect: "16/9" },
+    { src: "/images/profootball/01-desktop-home.png",        alt: "ProFootball desktop home",      caption: "Desktop home",        wide: true, aspect: "16/9" },
     { src: "/images/profootball/02-desktop-leaderboard.png", alt: "ProFootball leaderboards",      caption: "Leaderboards" },
     { src: "/images/profootball/03-desktop-trivia.png",      alt: "ProFootball trivia system",     caption: "Trivia system" },
     { src: "/images/profootball/04-desktop-channels.png",    alt: "ProFootball channels",          caption: "Channels" },
@@ -60,7 +60,7 @@ function NeoCashGallery({ images }: { images: GalleryImage[] }) {
       {/* After — primary showcase */}
       <ScrollReveal>
         <div style={{ marginBottom: "var(--s-3)" }}>
-          <span className="t-meta" style={{ color: "var(--signal)" }}>After — redesign</span>
+          <span className="t-meta" style={{ color: "var(--signal)" }}>Redesign</span>
         </div>
       </ScrollReveal>
       <div
@@ -94,7 +94,7 @@ function NeoCashGallery({ images }: { images: GalleryImage[] }) {
           }}
         >
           <div style={{ marginBottom: "var(--s-4)" }}>
-            <span className="t-meta" style={{ color: "var(--fog)" }}>Before — original</span>
+            <span className="t-meta" style={{ color: "var(--fog)" }}>Before</span>
           </div>
           <div
             style={{
@@ -133,7 +133,7 @@ function ProFootballGallery({ images }: { images: GalleryImage[] }) {
         <div style={{ position: "relative", aspectRatio: "16/9", overflow: "hidden", border: "1px solid var(--ash)", marginBottom: "var(--s-3)" }}>
           <Image src={wide[0].src} alt={wide[0].alt} fill sizes="100vw" style={{ objectFit: "cover", objectPosition: "top" }} priority />
         </div>
-        <figcaption className="t-meta" style={{ color: "var(--fog)", marginBottom: "var(--s-7)" }}>Desktop — home</figcaption>
+        <figcaption className="t-meta" style={{ color: "var(--fog)", marginBottom: "var(--s-7)" }}>Desktop home</figcaption>
       </ScrollReveal>
 
       {/* Desktop screens row */}

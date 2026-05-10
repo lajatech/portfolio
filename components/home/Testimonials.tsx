@@ -24,7 +24,7 @@ const testimonials = [
   },
   {
     quote:
-      "Professional, creative, and reliable — he delivered a product that made a huge impact.",
+      "Professional, creative, and reliable. He delivered a product that made a huge impact.",
     name: "Abel Tayo",
     role: "COO",
     company: "Proven",

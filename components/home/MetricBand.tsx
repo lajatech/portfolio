@@ -32,7 +32,7 @@ export default function MetricBand() {
             className="t-meta"
             style={{ color: "var(--mist)", display: "block", marginBottom: "var(--s-9)" }}
           >
-            Impact — measured
+            Impact, measured
           </span>
         </ScrollReveal>
 
