@@ -10,14 +10,12 @@ type Client = {
 };
 
 const clients: Client[] = [
-  { name: "Workergen",    abbr: "WG" },
-  { name: "Volta Charger",abbr: "VC" },
-  { name: "Estility Ltd", abbr: "ES" },
-  { name: "NeoCash",      abbr: "NC" },
-  { name: "Àjọpaw",       abbr: "AJ" },
-  { name: "ProFootball",  abbr: "PF" },
-  /* Logo paths added once SVG files are placed in /public/logos/:
-     logo: "/logos/workergen.svg" etc. */
+  { name: "Workergen",    logo: "/logos/workergen.svg", abbr: "WG" },
+  { name: "Volta Charger",logo: "/logos/volta.svg",     abbr: "VC" },
+  { name: "Estility Ltd", logo: "/logos/estility.svg",  abbr: "ES" },
+  { name: "NeoCash",      logo: "/logos/neocash.svg",   abbr: "NC" },
+  { name: "Àjọpaw",       logo: "/logos/ajopaw.svg",    abbr: "AJ" },
+  { name: "DukaCards",    logo: "/logos/dukacards.svg", abbr: "DC" },
 ];
 
 function ClientLogo({ client }: { client: Client }) {
@@ -28,7 +26,7 @@ function ClientLogo({ client }: { client: Client }) {
         alt={client.name}
         width={120}
         height={36}
-        style={{ objectFit: "contain", filter: "brightness(0) invert(0.6)", maxHeight: 36 }}
+        style={{ objectFit: "contain", maxHeight: 36 }}
       />
     );
   }
