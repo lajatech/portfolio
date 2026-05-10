@@ -510,6 +510,38 @@ body {
   }
 }
 
+/* ─── Light mode ─────────────────────────────────────────────────── */
+[data-theme="light"] {
+  --void:   #F5F7FA;
+  --char:   #ECEEF3;
+  --shroud: #E3E6EC;
+  --ash:    #C5C9D6;
+  --fog:    #8892A2;
+  --mist:   #5C6474;
+  --bone:   #354060;
+  --veil:   #0D1525;
+  --paper:  #FFFFFF;
+
+  --signal:       #1E5FA0;
+  --signal-deep:  #EAF3FC;
+  --signal-glow:  #5BA3D9;
+
+  --veil-04: rgba(13, 21, 37, 0.04);
+  --veil-08: rgba(13, 21, 37, 0.08);
+  --veil-16: rgba(13, 21, 37, 0.16);
+  --void-60: rgba(245, 247, 250, 0.60);
+  --void-90: rgba(245, 247, 250, 0.90);
+
+  --sh-inset:       inset 0 1px 0 rgba(0,0,0,0.05), inset 0 -1px 0 rgba(0,0,0,0.03);
+  --sh-vignette:    inset 0 0 200px rgba(0, 0, 0, 0.06);
+  --sh-glow-signal: 0 0 24px rgba(30, 95, 160, 0.18);
+}
+
+[data-theme="light"] ::selection {
+  background: var(--signal);
+  color: #fff;
+}
+
 /* ─── Focus ring ─────────────────────────────────────────────────── */
 :focus-visible {
   outline: 1px solid var(--signal);

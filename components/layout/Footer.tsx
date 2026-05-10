@@ -1,4 +1,5 @@
 import Link from "next/link";
+import ThemeToggle from "@/components/ui/ThemeToggle";
 
 export default function Footer() {
   const year = new Date().getFullYear();
@@ -44,7 +45,7 @@ export default function Footer() {
             ))}
           </nav>
 
-          {/* Right — socials */}
+          {/* Right — socials + theme toggle */}
           <div className="flex items-center" style={{ gap: "var(--s-5)" }}>
             {[
               { href: "https://linkedin.com/in/abdulmuiz-adelaja", label: "LinkedIn ↗" },
@@ -62,6 +63,7 @@ export default function Footer() {
                 {label}
               </a>
             ))}
+            <ThemeToggle />
           </div>
         </div>
       </div>

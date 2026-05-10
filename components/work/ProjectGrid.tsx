@@ -70,7 +70,7 @@ export default function ProjectGrid() {
                       width: "100%",
                       height: "100%",
                       objectFit: "cover",
-                      objectPosition: "top center",
+                      objectPosition: "center",
                     }}
                   />
                 )}
@@ -103,14 +103,6 @@ export default function ProjectGrid() {
 
                 {/* Title + category — bottom */}
                 <div style={{ position: "relative", zIndex: 2, padding: "0 var(--s-5) var(--s-5)" }}>
-                  {p.note && (
-                    <div
-                      className="t-meta"
-                      style={{ color: "var(--signal)", marginBottom: "var(--s-2)" }}
-                    >
-                      {p.note}
-                    </div>
-                  )}
                   <h3
                     className="t-h2"
                     style={{ color: "var(--veil)", marginBottom: "var(--s-2)" }}
