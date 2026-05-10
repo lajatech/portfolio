@@ -62,6 +62,7 @@ function ClientLogo({ client }: { client: Client }) {
 export default function TrustedBy() {
   return (
     <section
+      className="always-dark"
       style={{
         background: "var(--void)",
         padding: "var(--s-9) 0",

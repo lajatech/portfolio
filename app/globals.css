@@ -488,6 +488,20 @@ body {
   }
 }
 
+/* ─── Always-dark section (e.g. logo wall) ───────────────────────── */
+[data-theme="light"] .always-dark {
+  --void:    #08090B;
+  --char:    #101216;
+  --shroud:  #15171B;
+  --ash:     #23262C;
+  --fog:     #4E545E;
+  --mist:    #7C8290;
+  --bone:    #B3BCC9;
+  --veil:    #D8DEEC;
+  --veil-04: rgba(216, 222, 236, 0.04);
+  --veil-08: rgba(216, 222, 236, 0.08);
+}
+
 .reveal {
   animation: reveal-up var(--dur-slow) var(--ease-eerie) both;
 }
