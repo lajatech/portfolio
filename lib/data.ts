@@ -275,14 +275,14 @@ export const snapshotProjects = [
     title: "DukaCards",
     category: "App Design",
     year: "2025",
-    image: "/images/snapshots/dukacards.jpg",
+    image: "/images/snapshots/dukacards.png",
   },
   {
     title: "Quiver Finance",
     category: "Product Design · Gamification",
     year: "2024",
     note: "5.1% → 18% retention in 8 weeks",
-    image: "/images/snapshots/quiver.jpg",
+    image: "/images/snapshots/quiver.png",
   },
   {
     title: "Vescrow",
@@ -307,6 +307,7 @@ export const snapshotProjects = [
     category: "E-Learning Platform",
     year: "2025",
     note: "Lagos State Government · NDA cleared",
+    image: "/images/snapshots/classbox.png",
   },
 ];
 
