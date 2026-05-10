@@ -1,3 +1,5 @@
+"use client";
+
 import ScrollReveal from "@/components/ui/ScrollReveal";
 import MetricCounter from "@/components/ui/MetricCounter";
 
@@ -35,25 +37,45 @@ export default function MetricBand() {
         </ScrollReveal>
 
         {/* Metrics grid */}
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-            gap: "0",
-          }}
-        >
+        <style>{`
+          .metric-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0;
+          }
+          .metric-cell {
+            padding: var(--s-7) var(--s-6);
+            min-width: 0;
+          }
+          .metric-cell:not(:nth-child(3n)) { border-right: 1px solid var(--ash); }
+          .metric-cell:nth-child(-n+3)     { border-bottom: 1px solid var(--ash); }
+          @media (max-width: 768px) {
+            .metric-grid { grid-template-columns: repeat(2, 1fr) !important; }
+            .metric-cell:not(:nth-child(3n)) { border-right: none; }
+            .metric-cell:not(:nth-child(2n)) { border-right: 1px solid var(--ash); }
+            .metric-cell:nth-child(-n+3)     { border-bottom: none; }
+            .metric-cell:nth-child(-n+4)     { border-bottom: 1px solid var(--ash); }
+          }
+          @media (max-width: 480px) {
+            .metric-grid { grid-template-columns: 1fr !important; }
+            .metric-cell { border-right: none !important; border-bottom: 1px solid var(--ash) !important; }
+            .metric-cell:last-child { border-bottom: none !important; }
+          }
+        `}</style>
+        <div className="metric-grid">
           {metrics.map((m, i) => (
             <ScrollReveal key={m.label} delay={i * 0.06}>
-              <div
-                style={{
-                  padding: "var(--s-7) var(--s-6)",
-                  borderRight: i % 3 !== 2 ? "1px solid var(--ash)" : "none",
-                  borderBottom: i < 3 ? "1px solid var(--ash)" : "none",
-                }}
-              >
+              <div className="metric-cell">
                 <div
-                  className="t-display-lg"
-                  style={{ color: "var(--veil)", marginBottom: "var(--s-2)", lineHeight: 1 }}
+                  style={{
+                    fontFamily: "var(--font-display)",
+                    fontSize: "clamp(36px, 4vw, 76px)",
+                    color: "var(--veil)",
+                    marginBottom: "var(--s-2)",
+                    lineHeight: 1,
+                    letterSpacing: "-0.03em",
+                    overflow: "hidden",
+                  }}
                 >
                   <MetricCounter value={m.value} />
                 </div>
