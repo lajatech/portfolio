@@ -83,14 +83,33 @@ export default function TrustedBy() {
           </span>
         </ScrollReveal>
 
-        <div
-          className="flex flex-wrap items-center justify-center"
-          style={{ gap: "var(--s-8)" }}
-        >
+        <style>{`
+          .logos-row {
+            display: flex;
+            flex-wrap: nowrap;
+            align-items: center;
+            justify-content: center;
+            gap: var(--s-8);
+          }
+          @media (max-width: 640px) {
+            .logos-row {
+              display: grid;
+              grid-template-columns: repeat(2, 1fr);
+              gap: var(--s-6);
+            }
+            .logo-item {
+              justify-content: center;
+            }
+          }
+        `}</style>
+        <div className="logos-row">
           {clients.map((client, i) => (
             <ScrollReveal key={client.name} delay={i * 0.07}>
               <div
+                className="logo-item"
                 style={{
+                  display: "flex",
+                  alignItems: "center",
                   padding: "var(--s-3) var(--s-4)",
                   opacity: 0.75,
                   transition: "opacity 200ms",

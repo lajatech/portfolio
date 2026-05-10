@@ -40,8 +40,29 @@ export default function Testimonials() {
         borderTop: "1px solid var(--ash)",
       }}
     >
+      <style>{`
+        .testimonials-grid {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+          gap: 0;
+        }
+        .testimonial-card {
+          padding: var(--s-7);
+          margin: 0;
+        }
+        .testimonial-card:nth-child(odd)  { border-right: 1px solid var(--ash); }
+        .testimonial-card:nth-child(1),
+        .testimonial-card:nth-child(2)    { border-bottom: 1px solid var(--ash); }
+        @media (max-width: 640px) {
+          .testimonials-grid {
+            grid-template-columns: 1fr;
+          }
+          .testimonial-card:nth-child(odd)  { border-right: none; }
+          .testimonial-card:not(:last-child) { border-bottom: 1px solid var(--ash); }
+        }
+      `}</style>
+
       <div className="container-wide">
-        {/* Header */}
         <ScrollReveal>
           <span
             className="t-meta"
@@ -51,24 +72,10 @@ export default function Testimonials() {
           </span>
         </ScrollReveal>
 
-        {/* Testimonials — two-column on desktop */}
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(480px, 1fr))",
-            gap: "0",
-          }}
-        >
+        <div className="testimonials-grid">
           {testimonials.map((t, i) => (
             <ScrollReveal key={t.name} delay={i * 0.1}>
-              <blockquote
-                style={{
-                  padding: "var(--s-7)",
-                  borderBottom: i < testimonials.length - 1 ? "1px solid var(--ash)" : "none",
-                  borderRight: i % 2 === 0 ? "1px solid var(--ash)" : "none",
-                  margin: 0,
-                }}
-              >
+              <blockquote className="testimonial-card">
                 {/* Quote mark */}
                 <div
                   style={{
@@ -81,29 +88,23 @@ export default function Testimonials() {
                     userSelect: "none",
                   }}
                 >
-                  "
+                  &ldquo;
                 </div>
                 <p
                   className="t-quote"
                   style={{
                     color: "var(--veil)",
                     marginBottom: "var(--s-5)",
-                    fontSize: "clamp(18px, 2.5vw, 28px)",
+                    fontSize: "clamp(16px, 2vw, 24px)",
                   }}
                 >
                   {t.quote}
                 </p>
                 <footer>
-                  <div
-                    className="t-body"
-                    style={{ color: "var(--bone)", fontWeight: 500 }}
-                  >
+                  <div className="t-body" style={{ color: "var(--bone)", fontWeight: 500 }}>
                     {t.name}
                   </div>
-                  <div
-                    className="t-meta"
-                    style={{ color: "var(--mist)", marginTop: "4px" }}
-                  >
+                  <div className="t-meta" style={{ color: "var(--mist)", marginTop: "4px" }}>
                     {t.role} · {t.company}
                   </div>
                 </footer>
