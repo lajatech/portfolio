@@ -300,7 +300,7 @@ export const snapshotProjects = [
     title: "BruttForce Gallery",
     category: "Website Redesign + Development",
     year: "2023",
-    image: "https://cdn.prod.website-files.com/6378c5ec8c7bd812dfcbaaab/65dc34237b45fb941d3210b7_Brutt%20force%20Gallery%20Website%20design%205.png",
+    image: "https://cdn.prod.website-files.com/6378c5ec8c7bd812dfcbaaab/65dc341db768e5a874f62754_Brutt%20force%20Gallery%20Website%20design%204.png",
   },
   {
     title: "Classbox",
