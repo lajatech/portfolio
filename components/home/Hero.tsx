@@ -76,12 +76,12 @@ export default function Hero() {
         <motion.div style={{ y: titleY, maxWidth: "1100px" }}>
           <motion.h1
             className="t-display-xl"
-            style={{ color: "var(--veil)", marginBottom: "var(--s-3)" }}
+            style={{ color: "var(--veil)", marginBottom: "0.1em", lineHeight: 0.92 }}
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.72, delay: 0.2, ease }}
           >
-            Senior product
+            Senior
           </motion.h1>
           <motion.div
             className="t-editorial-xl"
@@ -90,7 +90,7 @@ export default function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.72, delay: 0.35, ease }}
           >
-            designer.
+            product designer.
           </motion.div>
         </motion.div>
 
