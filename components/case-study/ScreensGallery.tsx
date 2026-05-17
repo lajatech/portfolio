@@ -49,15 +49,22 @@ const galleries: Record<string, GalleryImage[]> = {
     {
       src: "/images/neocash/01-old-dashboard.png",
       alt: "NeoCash original dashboard — before redesign",
-      caption: "Before: Dashboard",
-      sub: "Cluttered hierarchy. No clear path to action.",
+      caption: "Before: Home",
+      sub: "₦0 balance, no loan context, no clear next step.",
       aspect: "9/19",
     },
     {
       src: "/images/neocash/02-old-loan.png",
-      alt: "NeoCash original loan form — before redesign",
-      caption: "Before: Loan form",
-      sub: "All fields at once. No context, no warmth, no progress signal.",
+      alt: "NeoCash original loans screen — before redesign",
+      caption: "Before: Loans",
+      sub: "Empty state only. No guidance on how to start.",
+      aspect: "9/19",
+    },
+    {
+      src: "/images/neocash/Action%20Required.png",
+      alt: "NeoCash original loan status — actions required",
+      caption: "Before: Loan status",
+      sub: "Three separate action items with no progress signal or priority order.",
       aspect: "9/19",
     },
   ],
@@ -420,7 +427,7 @@ function NeoCashGallery({ images }: { images: GalleryImage[] }) {
           }}
         >
           <div
-            style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "var(--s-5)" }}
+            style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "var(--s-5)" }}
             className="screens-grid-mobile"
           >
             {before.map((img) => (
