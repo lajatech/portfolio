@@ -325,10 +325,14 @@ function WideImage({ img }: { img: GalleryImage }) {
 
 /* ─── Shared: mobile phone strip ────────────────────────────────── */
 function MobileStrip({ images, label }: { images: GalleryImage[]; label?: string }) {
+  const cols = images.length;
   return (
     <div style={{ marginBottom: "var(--s-7)" }}>
       {label && <SectionDivider label={label} />}
-      <div className="mobile-screens-row">
+      <div
+        className="mobile-screens-row"
+        style={{ "--strip-cols": cols } as React.CSSProperties}
+      >
         {images.map((img, i) => (
           <ScrollReveal key={img.src} delay={i * 0.06}>
             <figure style={{ margin: 0, minWidth: "140px" }}>
@@ -623,8 +627,8 @@ export default function ScreensGallery({ cs }: { cs: CaseStudy }) {
         .screens-grid-mobile { }
         .mobile-screens-row {
           display: grid;
-          grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-          gap: var(--s-3);
+          grid-template-columns: repeat(var(--strip-cols, 6), 1fr);
+          gap: var(--s-4);
         }
         .screens-grid-tablet { }
         .screens-grid-mobile-1col { }
@@ -635,7 +639,7 @@ export default function ScreensGallery({ cs }: { cs: CaseStudy }) {
             grid-template-columns: repeat(2, 1fr) !important;
           }
           .mobile-screens-row {
-            display: flex;
+            display: flex !important;
             overflow-x: auto;
             gap: var(--s-3);
             padding-bottom: var(--s-3);
@@ -645,7 +649,7 @@ export default function ScreensGallery({ cs }: { cs: CaseStudy }) {
           .mobile-screens-row > * {
             scroll-snap-align: start;
             flex-shrink: 0;
-            width: 140px;
+            width: 160px;
           }
           .screens-grid-tablet {
             grid-template-columns: repeat(2, 1fr) !important;
