@@ -168,32 +168,50 @@ const galleries: Record<string, GalleryImage[]> = {
       caption: "Channels",
       sub: "Curated football content alongside the engagement mechanics.",
     },
-    /* mobile strip */
+    /* mobile strip — Figma exports */
     {
-      src: "/images/profootball/05-mobile-home.png",
-      alt: "ProFootball mobile home",
+      src: "/images/profootball/Home%20Page%20-%20Default.png",
+      alt: "ProFootball mobile home — feed, scores, trivia",
       caption: "Home",
+      sub: "Live scores and trivia carousel co-exist without competing.",
       aspect: "9/19",
       mobile: true,
     },
     {
-      src: "/images/profootball/06-mobile-trivia.png",
-      alt: "ProFootball mobile trivia",
+      src: "/images/profootball/Home%20Page%20-%20Default-1.png",
+      alt: "ProFootball mobile home — scrolled state",
+      caption: "Home (scrolled)",
+      aspect: "9/19",
+      mobile: true,
+    },
+    {
+      src: "/images/profootball/Trivia%20Screen.png",
+      alt: "ProFootball mobile trivia — categories and active contests",
       caption: "Trivia",
+      sub: "Categories, active contests, pick up where you left off.",
       aspect: "9/19",
       mobile: true,
     },
     {
-      src: "/images/profootball/07-mobile-profile.png",
-      alt: "ProFootball mobile profile",
-      caption: "Profile",
+      src: "/images/profootball/Trivia%20Screen%20-%20Question.png",
+      alt: "ProFootball mobile trivia — question in progress",
+      caption: "Trivia · Active",
+      sub: "Timed for tension, not anxiety.",
       aspect: "9/19",
       mobile: true,
     },
     {
-      src: "/images/profootball/08-mobile-leaderboard.png",
-      alt: "ProFootball mobile leaderboard",
+      src: "/images/profootball/Leaderboard%20-%20Overall.png",
+      alt: "ProFootball mobile leaderboard — ranked standings",
       caption: "Leaderboard",
+      sub: "Overall / Predictions / Trivias tabs. Status made visible.",
+      aspect: "9/19",
+      mobile: true,
+    },
+    {
+      src: "/images/profootball/Channel%20Screen.png",
+      alt: "ProFootball mobile channels — curated football content",
+      caption: "Channels",
       aspect: "9/19",
       mobile: true,
     },
@@ -594,7 +612,7 @@ export default function ScreensGallery({ cs }: { cs: CaseStudy }) {
         .screens-grid-mobile { }
         .mobile-screens-row {
           display: grid;
-          grid-template-columns: repeat(4, 1fr);
+          grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
           gap: var(--s-3);
         }
         .screens-grid-tablet { }
