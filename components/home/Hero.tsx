@@ -118,11 +118,11 @@ export default function Hero() {
             Senior
           </motion.h1>
 
-          {/* Typewriter role line — fixed height prevents layout shift below */}
+          {/* Typewriter role line — fixed height on desktop prevents layout shift */}
           <motion.div
+            className="hero-role-wrap"
             style={{
               marginBottom: "var(--s-7)",
-              height: "clamp(59px, 11vw, 155px)",
               display: "flex",
               alignItems: "center",
               overflow: "visible",
@@ -132,7 +132,7 @@ export default function Hero() {
             transition={{ duration: 0.72, delay: 0.35, ease }}
           >
             <span
-              className="t-editorial-xl"
+              className="t-editorial-xl hero-role-text"
               style={{
                 color: "var(--mist)",
                 display: "inline-flex",
@@ -211,6 +211,19 @@ export default function Hero() {
         @keyframes cursor-blink {
           0%, 100% { opacity: 1; }
           50%       { opacity: 0; }
+        }
+        /* Desktop: lock height so siblings never shift during typing */
+        @media (min-width: 641px) {
+          .hero-role-wrap { height: clamp(59px, 11vw, 155px); }
+        }
+        /* Mobile: smaller font so even the longest role fits on-screen */
+        @media (max-width: 640px) {
+          .hero-role-text {
+            font-size: clamp(28px, 7.5vw, 52px) !important;
+            white-space: normal !important;
+            line-height: 1.1 !important;
+          }
+          .hero-role-wrap { min-height: 36px; }
         }
       `}</style>
     </section>
