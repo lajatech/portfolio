@@ -118,33 +118,41 @@ export default function Hero() {
             Senior
           </motion.h1>
 
-          {/* Typewriter role line */}
+          {/* Typewriter role line — fixed height prevents layout shift below */}
           <motion.div
-            className="t-editorial-xl"
             style={{
-              color: "var(--mist)",
               marginBottom: "var(--s-7)",
-              minHeight: "1.1em",
+              height: "clamp(59px, 11vw, 155px)",
               display: "flex",
-              alignItems: "baseline",
-              gap: "0.15em",
+              alignItems: "center",
+              overflow: "visible",
             }}
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.72, delay: 0.35, ease }}
           >
-            <span>{role}</span>
             <span
-              aria-hidden="true"
+              className="t-editorial-xl"
               style={{
-                display: "inline-block",
-                width: "3px",
-                height: "0.75em",
-                background: "var(--bone)",
-                marginLeft: "2px",
-                animation: "cursor-blink 1.1s step-end infinite",
+                color: "var(--mist)",
+                display: "inline-flex",
+                alignItems: "baseline",
+                whiteSpace: "nowrap",
               }}
-            />
+            >
+              {role}
+              <span
+                aria-hidden="true"
+                style={{
+                  display: "inline-block",
+                  width: "3px",
+                  height: "0.75em",
+                  background: "var(--bone)",
+                  marginLeft: "2px",
+                  animation: "cursor-blink 1.1s step-end infinite",
+                }}
+              />
+            </span>
           </motion.div>
         </motion.div>
 

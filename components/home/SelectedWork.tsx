@@ -1,8 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
-import { motion } from "framer-motion";
 import ScrollReveal from "@/components/ui/ScrollReveal";
 
 const featured = [
@@ -15,19 +13,7 @@ const featured = [
     metric: "+1050%",
     metricLabel: "loan completion",
     year: "2025",
-    brandColor: "#1A0A32",
-    brandGlow: "rgba(90, 40, 180, 0.25)",
-    image: "/images/neocash/06-new-dashboard.png",
-    imageStyle: {
-      position: "absolute" as const,
-      right: "-5%",
-      bottom: "10%",
-      width: "48%",
-      height: "78%",
-      objectFit: "contain" as const,
-      objectPosition: "top center",
-      opacity: 0.85,
-    },
+    size: "large",
   },
   {
     index: "002",
@@ -38,18 +24,7 @@ const featured = [
     metric: "19%",
     metricLabel: "more leads closed",
     year: "2023–2025",
-    brandColor: "#0E0620",
-    brandGlow: "rgba(60, 20, 120, 0.2)",
-    image: "/images/estility/01-ui-screens.png",
-    imageStyle: {
-      position: "absolute" as const,
-      inset: 0,
-      width: "100%",
-      height: "100%",
-      objectFit: "cover" as const,
-      objectPosition: "center",
-      opacity: 0.35,
-    },
+    size: "medium",
   },
   {
     index: "003",
@@ -58,46 +33,9 @@ const featured = [
     subtitle: "Turning passive fans into active participants.",
     tags: ["Sports Tech", "Gamification", "Trivia"],
     metric: "2",
-    metricLabel: "gamification systems",
+    metricLabel: "gamification systems built",
     year: "2024",
-    brandColor: "#060F05",
-    brandGlow: "rgba(20, 80, 30, 0.2)",
-    image: "/images/profootball/01-desktop-home.png",
-    imageStyle: {
-      position: "absolute" as const,
-      top: 0,
-      left: 0,
-      right: 0,
-      width: "100%",
-      height: "65%",
-      objectFit: "cover" as const,
-      objectPosition: "top center",
-      opacity: 0.45,
-    },
-  },
-  {
-    index: "004",
-    slug: "workergen",
-    title: "Workergen AI Marketplace",
-    subtitle: "15+ agents shipped. TTV cut to 130 seconds.",
-    tags: ["AI / SaaS", "Design System"],
-    metric: "−50%",
-    metricLabel: "churn rate",
-    year: "2024",
-    brandColor: "#090D14",
-    brandGlow: "rgba(40, 60, 100, 0.2)",
-    image: "/images/workergen/01-home.png",
-    imageStyle: {
-      position: "absolute" as const,
-      top: 0,
-      left: 0,
-      right: 0,
-      width: "100%",
-      height: "65%",
-      objectFit: "cover" as const,
-      objectPosition: "top center",
-      opacity: 0.45,
-    },
+    size: "medium",
   },
 ];
 
@@ -115,139 +53,66 @@ export default function SelectedWork() {
         <ScrollReveal>
           <div
             className="flex items-center justify-between"
-            style={{ marginBottom: "var(--s-8)" }}
+            style={{ marginBottom: "var(--s-9)" }}
           >
             <span className="t-meta" style={{ color: "var(--mist)" }}>
               Selected work
             </span>
-            <Link href="/work" className="btn-ghost t-meta" style={{ color: "var(--bone)" }}>
+            <Link
+              href="/work"
+              className="btn-ghost t-meta"
+              style={{ color: "var(--bone)" }}
+            >
               All projects →
             </Link>
           </div>
         </ScrollReveal>
 
-        {/* Card grid */}
+        {/* Project list */}
         <style>{`
-          .work-card-grid {
+          .work-article {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 2px;
+            grid-template-columns: 80px 1fr auto;
+            gap: var(--s-6);
+            align-items: start;
           }
-          @media (max-width: 768px) {
-            .work-card-grid { grid-template-columns: 1fr; }
-          }
-          .work-card-inner {
-            position: relative;
-            overflow: hidden;
-            height: 480px;
-            transition: transform 360ms cubic-bezier(0.2, 0.8, 0.2, 1);
-          }
-          @media (max-width: 480px) {
-            .work-card-inner { height: 380px; }
-          }
-          .work-card-inner:hover {
-            transform: translateY(-3px);
-          }
-          .work-card-inner:hover .work-card-arrow {
-            transform: translate(3px, -3px);
-          }
-          .work-card-arrow {
-            transition: transform 300ms cubic-bezier(0.2, 0.8, 0.2, 1);
+          @media (max-width: 640px) {
+            .work-article { grid-template-columns: 48px 1fr; }
+            .work-metric  { display: none; }
           }
         `}</style>
-
-        <div className="work-card-grid">
+        <div style={{ display: "flex", flexDirection: "column" }}>
           {featured.map((project, i) => (
-            <ScrollReveal key={project.slug} delay={i * 0.07}>
-              <Link href={`/case-study/${project.slug}`} style={{ textDecoration: "none", display: "block" }}>
+            <ScrollReveal key={project.slug} delay={i * 0.08}>
+              <Link
+                href={`/case-study/${project.slug}`}
+                className="group"
+                style={{ textDecoration: "none" }}
+              >
                 <article
-                  className="work-card-inner"
-                  style={{ background: project.brandColor }}
+                  className="work-article"
+                  style={{
+                    padding: "var(--s-7) 0",
+                    borderBottom: "1px solid var(--ash)",
+                    transition: "background 180ms var(--ease-eerie)",
+                  }}
                 >
-                  {/* Product screenshot */}
-                  <img
-                    src={project.image}
-                    alt={project.title}
-                    style={project.imageStyle}
-                  />
-
-                  {/* Bottom gradient scrim */}
-                  <div
-                    aria-hidden="true"
-                    style={{
-                      position: "absolute",
-                      inset: 0,
-                      background: `linear-gradient(to top, ${project.brandColor} 35%, rgba(0,0,0,0) 75%)`,
-                      pointerEvents: "none",
-                    }}
-                  />
-
-                  {/* Top-left: index + arrow */}
-                  <div
-                    style={{
-                      position: "absolute",
-                      top: "var(--s-5)",
-                      left: "var(--s-5)",
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "var(--s-3)",
-                      zIndex: 3,
-                    }}
+                  {/* Index */}
+                  <span
+                    className="t-meta"
+                    style={{ color: "var(--mist)", paddingTop: "6px" }}
                   >
-                    <span
-                      className="t-meta"
-                      style={{ color: "rgba(255,255,255,0.35)" }}
-                    >
-                      {project.index}
-                    </span>
-                  </div>
+                    {project.index}
+                  </span>
 
-                  {/* Top-right: metric */}
-                  <div
-                    style={{
-                      position: "absolute",
-                      top: "var(--s-5)",
-                      right: "var(--s-5)",
-                      textAlign: "right",
-                      zIndex: 3,
-                    }}
-                  >
-                    <div
-                      className="t-display-sm"
-                      style={{ color: "rgba(255,255,255,0.9)", lineHeight: 1 }}
-                    >
-                      {project.metric}
-                    </div>
-                    <div
-                      className="t-meta"
-                      style={{ color: "rgba(255,255,255,0.35)", marginTop: "4px" }}
-                    >
-                      {project.metricLabel}
-                    </div>
-                  </div>
-
-                  {/* Bottom content */}
-                  <div
-                    style={{
-                      position: "absolute",
-                      bottom: 0,
-                      left: 0,
-                      right: 0,
-                      padding: "var(--s-5) var(--s-5) var(--s-6)",
-                      zIndex: 3,
-                    }}
-                  >
-                    <div style={{ marginBottom: "var(--s-2)" }}>
-                      <span className="t-meta" style={{ color: "rgba(255,255,255,0.3)" }}>
-                        {project.year}
-                      </span>
-                    </div>
+                  {/* Content */}
+                  <div>
                     <h3
                       className="t-display-sm"
                       style={{
-                        color: "#ffffff",
+                        color: "var(--veil)",
                         marginBottom: "var(--s-2)",
-                        lineHeight: 1.05,
+                        transition: "color 180ms var(--ease-eerie)",
                       }}
                     >
                       {project.title}
@@ -255,52 +120,113 @@ export default function SelectedWork() {
                     <p
                       className="t-editorial-md"
                       style={{
-                        color: "rgba(255,255,255,0.55)",
+                        color: "var(--mist)",
                         marginBottom: "var(--s-4)",
-                        fontSize: "clamp(16px, 2vw, 24px)",
+                        fontSize: "clamp(20px, 3vw, 36px)",
                       }}
                     >
                       {project.subtitle}
                     </p>
-                    <div
+                    <div className="flex flex-wrap items-center" style={{ gap: "var(--s-2)" }}>
+                      {project.tags.map((tag) => (
+                        <span key={tag} className="pill">
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Right — metric + arrow (hidden on mobile via .work-metric) */}
+                  <div
+                    className="work-metric flex flex-col items-end"
+                    style={{ gap: "var(--s-2)", textAlign: "right" }}
+                  >
+                    <div>
+                      <div
+                        className="t-display-md"
+                        style={{ color: "var(--veil)", lineHeight: 1 }}
+                      >
+                        {project.metric}
+                      </div>
+                      <div
+                        className="t-meta"
+                        style={{ color: "var(--fog)", marginTop: "4px" }}
+                      >
+                        {project.metricLabel}
+                      </div>
+                    </div>
+                    <span
+                      className="t-meta"
+                      style={{ color: "var(--fog)" }}
+                    >
+                      {project.year}
+                    </span>
+                    <span
                       style={{
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "space-between",
+                        color: "var(--mist)",
+                        fontSize: "20px",
+                        transition: "color 180ms var(--ease-eerie)",
                       }}
                     >
-                      <div className="flex flex-wrap" style={{ gap: "var(--s-2)" }}>
-                        {project.tags.map((tag) => (
-                          <span
-                            key={tag}
-                            className="pill"
-                            style={{
-                              borderColor: "rgba(255,255,255,0.18)",
-                              color: "rgba(255,255,255,0.5)",
-                            }}
-                          >
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
-                      <span
-                        className="work-card-arrow"
-                        style={{
-                          color: "rgba(255,255,255,0.5)",
-                          fontSize: "20px",
-                          flexShrink: 0,
-                          marginLeft: "var(--s-3)",
-                        }}
-                      >
-                        ↗
-                      </span>
-                    </div>
+                      ↗
+                    </span>
                   </div>
                 </article>
               </Link>
             </ScrollReveal>
           ))}
         </div>
+
+        {/* Workergen mini — separate treatment */}
+        <ScrollReveal delay={0.3}>
+          <Link
+            href="/case-study/workergen"
+            style={{ textDecoration: "none" }}
+          >
+            <div
+              style={{
+                marginTop: "var(--s-7)",
+                padding: "var(--s-6)",
+                background: "var(--char)",
+                border: "1px solid var(--ash)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                gap: "var(--s-5)",
+                boxShadow: "var(--sh-inset)",
+                transition: "transform 180ms var(--ease-eerie)",
+              }}
+              onMouseEnter={(e) => {
+                (e.currentTarget as HTMLElement).style.transform = "translateY(-2px)";
+              }}
+              onMouseLeave={(e) => {
+                (e.currentTarget as HTMLElement).style.transform = "none";
+              }}
+            >
+              <div>
+                <div
+                  className="flex items-center"
+                  style={{ gap: "var(--s-3)", marginBottom: "var(--s-2)" }}
+                >
+                  <span className="t-meta" style={{ color: "var(--mist)" }}>
+                    004
+                  </span>
+                  <span className="pill">Mini Case Study</span>
+                  <span className="pill">AI / SaaS</span>
+                </div>
+                <h3 className="t-h2" style={{ color: "var(--veil)" }}>
+                  Workergen AI Marketplace
+                </h3>
+                <p className="t-body" style={{ color: "var(--bone)", marginTop: "var(--s-2)" }}>
+                  15+ AI agents shipped. TTV reduced to 130 seconds. Churn halved.
+                </p>
+              </div>
+              <div style={{ flexShrink: 0, color: "var(--mist)", fontSize: "24px" }}>
+                →
+              </div>
+            </div>
+          </Link>
+        </ScrollReveal>
       </div>
     </section>
   );
