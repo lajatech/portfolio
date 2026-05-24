@@ -40,7 +40,7 @@ export default function ProcessSection({ cs }: { cs: CaseStudy }) {
                 <div
                   className="t-meta"
                   style={{
-                    color: "var(--signal)",
+                    color: "var(--mist)",
                     paddingTop: "6px",
                   }}
                 >

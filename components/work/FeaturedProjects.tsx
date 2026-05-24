@@ -50,7 +50,7 @@ export default function FeaturedProjects() {
                   {/* Index */}
                   <span
                     className="t-meta"
-                    style={{ color: "var(--signal)", paddingTop: "6px" }}
+                    style={{ color: "var(--mist)", paddingTop: "6px" }}
                   >
                     {String(i + 1).padStart(3, "0")}
                   </span>

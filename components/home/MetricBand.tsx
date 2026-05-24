@@ -87,7 +87,7 @@ export default function MetricBand() {
                 </div>
                 <div
                   className="t-meta"
-                  style={{ color: "var(--signal)" }}
+                  style={{ color: "var(--fog)" }}
                 >
                   {m.context}
                 </div>

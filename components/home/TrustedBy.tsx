@@ -39,10 +39,10 @@ function ClientLogo({ client }: { client: Client }) {
       <div
         className="t-meta"
         style={{
-          color: "var(--signal)",
+          color: "var(--mist)",
           width: "28px",
           height: "28px",
-          border: "1px solid var(--signal-deep)",
+          border: "1px solid var(--ash)",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",

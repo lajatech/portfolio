@@ -12,29 +12,12 @@ export default function CTASection() {
         overflow: "hidden",
       }}
     >
-      {/* Ambient glow */}
-      <div
-        aria-hidden="true"
-        style={{
-          position: "absolute",
-          top: "50%",
-          left: "50%",
-          transform: "translate(-50%, -50%)",
-          width: "600px",
-          height: "300px",
-          background: "var(--signal-deep)",
-          borderRadius: "50%",
-          filter: "blur(120px)",
-          opacity: 0.15,
-          pointerEvents: "none",
-        }}
-      />
 
       <div className="container-wide relative" style={{ zIndex: 2, textAlign: "center" }}>
         <ScrollReveal>
           <span
             className="t-meta"
-            style={{ color: "var(--signal)", display: "block", marginBottom: "var(--s-6)" }}
+            style={{ color: "var(--mist)", display: "block", marginBottom: "var(--s-6)" }}
           >
             Let's work together
           </span>
