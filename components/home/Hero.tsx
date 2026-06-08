@@ -76,7 +76,7 @@ export default function Hero() {
       ref={sectionRef}
       className="relative grain"
       style={{
-        minHeight: "100dvh",
+        height: "100dvh",
         display: "flex",
         flexDirection: "column",
         justifyContent: "flex-end",
@@ -212,18 +212,23 @@ export default function Hero() {
           0%, 100% { opacity: 1; }
           50%       { opacity: 0; }
         }
-        /* Desktop: lock height so siblings never shift during typing */
-        @media (min-width: 641px) {
-          .hero-role-wrap { height: clamp(59px, 11vw, 155px); }
+        /* 80% of t-editorial-xl: clamp(64px,12vw,168px) → clamp(51px,9.6vw,134px) */
+        .hero-role-text {
+          font-size: clamp(51px, 9.6vw, 134px) !important;
+          line-height: 0.92 !important;
         }
-        /* Mobile: smaller font so even the longest role fits on-screen */
+        /* Desktop: fixed height = 0.92 × max font-size */
+        @media (min-width: 641px) {
+          .hero-role-wrap { height: clamp(47px, 8.8vw, 123px); }
+        }
+        /* Mobile: allow wrap, smaller font so longest role stays on-screen */
         @media (max-width: 640px) {
           .hero-role-text {
-            font-size: clamp(28px, 7.5vw, 52px) !important;
+            font-size: clamp(22px, 6vw, 42px) !important;
             white-space: normal !important;
-            line-height: 1.1 !important;
+            line-height: 1.15 !important;
           }
-          .hero-role-wrap { min-height: 36px; }
+          .hero-role-wrap { min-height: 30px; }
         }
       `}</style>
     </section>
