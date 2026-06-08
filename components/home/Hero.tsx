@@ -118,19 +118,32 @@ export default function Hero() {
             Senior
           </motion.h1>
 
-          {/* Typewriter role line — fixed height on desktop prevents layout shift */}
+          {/* Typewriter role line — width reserved by invisible longest-role ghost */}
           <motion.div
             className="hero-role-wrap"
             style={{
               marginBottom: "var(--s-7)",
-              display: "flex",
+              display: "inline-flex",
               alignItems: "center",
-              overflow: "visible",
+              position: "relative",
             }}
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.72, delay: 0.35, ease }}
           >
+            {/* Width reservation ghost — invisible, locks container to longest role */}
+            <span
+              aria-hidden="true"
+              className="t-editorial-xl hero-role-text"
+              style={{
+                visibility: "hidden",
+                whiteSpace: "nowrap",
+                pointerEvents: "none",
+              }}
+            >
+              design systems architect.
+            </span>
+            {/* Live animated text overlaid on top */}
             <span
               className="t-editorial-xl hero-role-text"
               style={{
@@ -138,6 +151,9 @@ export default function Hero() {
                 display: "inline-flex",
                 alignItems: "baseline",
                 whiteSpace: "nowrap",
+                position: "absolute",
+                top: 0,
+                left: 0,
               }}
             >
               {role}
