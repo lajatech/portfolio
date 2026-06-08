@@ -149,6 +149,7 @@ body {
   background: var(--void);
   color: var(--veil);
   min-height: 100dvh;
+  overflow-x: hidden;
 }
 
 ::selection {
