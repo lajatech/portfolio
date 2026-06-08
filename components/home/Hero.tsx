@@ -76,7 +76,7 @@ export default function Hero() {
       ref={sectionRef}
       className="relative grain"
       style={{
-        height: "100dvh",
+        minHeight: "100dvh",
         display: "flex",
         flexDirection: "column",
         justifyContent: "flex-end",
