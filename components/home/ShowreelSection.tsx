@@ -14,8 +14,8 @@ export default function ShowreelSection() {
         borderBottom: "1px solid var(--ash)",
       }}
     >
+      {/* Label row stays in container */}
       <div className="container-wide">
-        {/* Label row */}
         <ScrollReveal>
           <div
             className="flex items-center justify-between"
@@ -29,55 +29,84 @@ export default function ShowreelSection() {
             </span>
           </div>
         </ScrollReveal>
+      </div>
 
-        {/* Showreel — landscape crop hides watermark, grain reduces distraction */}
-        <ScrollReveal delay={0.08}>
-          <div style={{ display: "flex", justifyContent: "center" }}>
-            <div
-              className="grain"
-              style={{
-                position: "relative",
-                width: "100%",
-                maxWidth: "720px",
-                aspectRatio: "4/3",   /* landscape crop — square GIF, top portion shown */
-                overflow: "hidden",
-                border: "1px solid var(--ash)",
-                background: "var(--char)",
-              }}
-            >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={SHOWREEL_GIF}
-                alt="Làjà — Design showreel, selected product work 2019–2025"
-                style={{
-                  position: "absolute",
-                  top: 0,
-                  left: 0,
-                  width: "100%",
-                  height: "auto",
-                  display: "block",
-                }}
-                loading="lazy"
-              />
-              {/* Bottom edge fade to mask any residual branding */}
-              <div
-                aria-hidden="true"
-                style={{
-                  position: "absolute",
-                  bottom: 0,
-                  left: 0,
-                  right: 0,
-                  height: "60px",
-                  background: "linear-gradient(to bottom, transparent, var(--void))",
-                  pointerEvents: "none",
-                  zIndex: 2,
-                }}
-              />
-            </div>
-          </div>
-        </ScrollReveal>
+      {/* Full-width showreel with edge gradients */}
+      <ScrollReveal delay={0.08}>
+        <div
+          className="grain"
+          style={{
+            position: "relative",
+            width: "100%",
+            aspectRatio: "4/3",
+            overflow: "hidden",
+            background: "var(--char)",
+          }}
+        >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={SHOWREEL_GIF}
+            alt="Làjà — Design showreel, selected product work 2019–2025"
+            style={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              width: "100%",
+              height: "auto",
+              display: "block",
+            }}
+            loading="lazy"
+          />
 
-        {/* Caption */}
+          {/* Left edge fade */}
+          <div
+            aria-hidden="true"
+            style={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              bottom: 0,
+              width: "18%",
+              background: "linear-gradient(to right, var(--void), transparent)",
+              pointerEvents: "none",
+              zIndex: 2,
+            }}
+          />
+
+          {/* Right edge fade */}
+          <div
+            aria-hidden="true"
+            style={{
+              position: "absolute",
+              top: 0,
+              right: 0,
+              bottom: 0,
+              width: "18%",
+              background: "linear-gradient(to left, var(--void), transparent)",
+              pointerEvents: "none",
+              zIndex: 2,
+            }}
+          />
+
+          {/* Bottom edge fade to mask residual branding */}
+          <div
+            aria-hidden="true"
+            style={{
+              position: "absolute",
+              bottom: 0,
+              left: 0,
+              right: 0,
+              height: "80px",
+              background: "linear-gradient(to bottom, transparent, var(--void))",
+              pointerEvents: "none",
+              zIndex: 2,
+            }}
+          />
+        </div>
+      </ScrollReveal>
+
+      {/* Caption stays in container */}
+      <div className="container-wide">
         <ScrollReveal delay={0.14}>
           <p
             className="t-meta"
