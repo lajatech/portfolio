@@ -1,10 +1,29 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import ScrollReveal from "@/components/ui/ScrollReveal";
 
-const SHOWREEL_GIF = "https://framerusercontent.com/images/6tP1geDhKCyjmQlj89SqjzCuZfo.gif";
-
 export default function ShowreelSection() {
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    let anim: { destroy(): void } | null = null;
+
+    import("lottie-web").then((mod) => {
+      const lottie = mod.default;
+      if (!containerRef.current) return;
+      anim = lottie.loadAnimation({
+        container: containerRef.current,
+        renderer: "svg",
+        loop: true,
+        autoplay: true,
+        path: "/showreel.json",
+      });
+    });
+
+    return () => { anim?.destroy(); };
+  }, []);
+
   return (
     <section
       style={{
@@ -14,7 +33,7 @@ export default function ShowreelSection() {
         borderBottom: "1px solid var(--ash)",
       }}
     >
-      {/* Label row stays in container */}
+      {/* Label row */}
       <div className="container-wide">
         <ScrollReveal>
           <div
@@ -31,41 +50,20 @@ export default function ShowreelSection() {
         </ScrollReveal>
       </div>
 
-      {/* Full-width showreel with edge gradients */}
+      {/* Full-width Lottie with seamless edge gradients */}
       <ScrollReveal delay={0.08}>
         <div
           className="grain"
-          style={{
-            position: "relative",
-            width: "100%",
-            aspectRatio: "4/3",
-            overflow: "hidden",
-            background: "var(--char)",
-          }}
+          style={{ position: "relative", width: "100%", overflow: "hidden", background: "var(--void)" }}
         >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={SHOWREEL_GIF}
-            alt="Làjà — Design showreel, selected product work 2019–2025"
-            style={{
-              position: "absolute",
-              top: 0,
-              left: 0,
-              width: "100%",
-              height: "auto",
-              display: "block",
-            }}
-            loading="lazy"
-          />
+          <div ref={containerRef} style={{ width: "100%", display: "block" }} />
 
           {/* Left edge fade */}
           <div
             aria-hidden="true"
             style={{
               position: "absolute",
-              top: 0,
-              left: 0,
-              bottom: 0,
+              top: 0, left: 0, bottom: 0,
               width: "18%",
               background: "linear-gradient(to right, var(--void), transparent)",
               pointerEvents: "none",
@@ -78,9 +76,7 @@ export default function ShowreelSection() {
             aria-hidden="true"
             style={{
               position: "absolute",
-              top: 0,
-              right: 0,
-              bottom: 0,
+              top: 0, right: 0, bottom: 0,
               width: "18%",
               background: "linear-gradient(to left, var(--void), transparent)",
               pointerEvents: "none",
@@ -88,14 +84,12 @@ export default function ShowreelSection() {
             }}
           />
 
-          {/* Bottom edge fade to mask residual branding */}
+          {/* Bottom edge fade */}
           <div
             aria-hidden="true"
             style={{
               position: "absolute",
-              bottom: 0,
-              left: 0,
-              right: 0,
+              bottom: 0, left: 0, right: 0,
               height: "80px",
               background: "linear-gradient(to bottom, transparent, var(--void))",
               pointerEvents: "none",
@@ -105,7 +99,7 @@ export default function ShowreelSection() {
         </div>
       </ScrollReveal>
 
-      {/* Caption stays in container */}
+      {/* Caption */}
       <div className="container-wide">
         <ScrollReveal delay={0.14}>
           <p
