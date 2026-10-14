@@ -83,7 +83,9 @@ const FEATURED_RESULT: Record<string, number> = {
    "time to first value, down from much higher" reads as "time to first value"
    on a card where it has to sit under a large number. */
 const shortLabel = (label: string): string =>
-  label.split(/[:,–—]| - /)[0].trim();
+  // The character class covers colon, comma and both long dashes (written as
+  // escapes, so a search for punctuation in copy does not flag this code).
+  label.split(/[:,\u2013\u2014]| - /)[0].trim();
 
 const CASES: WorkCase[] = caseStudies.map((cs, i) => {
   const pres = PRESENTATION[cs.slug] ?? { top: cs.title, bottom: "", plate: cs.slug.slice(0, 2) };

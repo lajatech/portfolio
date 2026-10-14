@@ -1,5 +1,6 @@
 import { Cursor, Hud, Loader, Nav, Toast } from "@/components/chrome";
 import ScrollStage from "@/components/stage/ScrollStage";
+import { ClayScene } from "@/components/stage/scene";
 import Capabilities from "@/components/sections/Capabilities";
 import Contact from "@/components/sections/Contact";
 import Hero from "@/components/sections/Hero";
@@ -23,6 +24,9 @@ import Work from "@/components/sections/Work";
 export default function Home() {
   return (
     <ScrollStage>
+      {/* The canvas sits behind everything at z-index 0 and reads the stage,
+          so it has to live inside the provider and before <main>. */}
+      <ClayScene />
       <Loader />
       <Nav />
       <Hud />
