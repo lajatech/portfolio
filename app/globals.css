@@ -1,6 +1,4 @@
 @import "tailwindcss";
-/* Scoped styles for the routes not yet ported. See app/legacy.css. */
-@import "./legacy.css";
 
 /* ═══════════════════════════════════════════════════════════════════════
    Làjà, tactile portfolio
@@ -1801,4 +1799,777 @@ html.noload #loader { display: none; }
   .md-img { min-height: 260px; }
   .md-txt { padding: 26px 22px; }
   .md-body { font-size: 15px; }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   STANDALONE ROUTES: /work, /about, /case-study/[slug]
+   ───────────────────────────────────────────────────────────────────────
+   These three pages are ordinary documents, not the one-page ScrollStage
+   experience. They get the same palette, the same Anton display type and the
+   same full-bleed colour blocks, but none of the scroll choreography: the only
+   motion is a reveal class an IntersectionObserver adds.
+
+   Every selector here is prefixed `pg-` so nothing can reach the homepage
+   chapter classes, which are keyed off section names (.work, .contact, .foot)
+   and would otherwise collide. Tokens, .kicker, .big-title, .case-tag,
+   .case-metric, .aw-list, .ct-lines, .copy, .pill, .btn-y, .btn-n, .foot,
+   .ft-row and .to-top are reused as-is; only their positioning is reset where
+   the homepage pins them absolutely.
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* ─── Page shell ────────────────────────────────────────────────────── */
+.pg {
+  position: relative;
+  z-index: 2;
+  /* clip rather than hidden: hidden on an ancestor would break position:sticky
+     on the nav. clip has no such side effect. */
+  overflow-x: clip;
+  --pg-pad: 140µ;
+}
+
+.pg-sec {
+  /* positioned and stacked so .aw-list's negative-z hover bleed paints above
+     the section's own ground instead of disappearing behind it */
+  position: relative;
+  z-index: 1;
+  padding: var(--pg-pad) var(--gut);
+}
+/* Rows that are themselves full-bleed colour blocks supply their own insets,
+   and want no band of section ground above or below them. */
+.pg-sec.pg-bleed { padding: 0; }
+
+.pg-cream  { background: var(--cream);   color: var(--ink); }
+.pg-yellow { background: var(--yellow);  color: var(--ink); }
+.pg-white  { background: var(--white);   color: var(--ink); }
+.pg-blue   { background: var(--blue);    color: #fff; }
+.pg-navy   { background: var(--navy);    color: #fff; }
+.pg-ink    { background: var(--ink);     color: #fff; }
+.pg-coral  { background: var(--coral-3d); color: var(--ink); }
+
+/* .kicker b is yellow, which vanishes on a cream or yellow ground */
+.pg-cream .kicker b,
+.pg-yellow .kicker b,
+.pg-white .kicker b { color: var(--coral-3d); }
+/* and coral is the ground on a coral block, so that one needs a third answer */
+.pg-coral .kicker b { color: var(--navy); }
+
+/* ─── Reusing the homepage buttons outside their pinned contexts ────── */
+.pg-btn {
+  position: static;
+  left: auto;
+  top: auto;
+  right: auto;
+  bottom: auto;
+  width: auto;
+  grid-column: auto;
+  justify-self: start;
+}
+
+/* ─── Reveal on scroll ──────────────────────────────────────────────── */
+/* The observer only ever adds .pg-in, so the pre-reveal state has to be the
+   authored one. If the script never runs the content is invisible, which is
+   why PageChrome also reveals everything on its first pass. */
+.pg-rv {
+  opacity: 0;
+  transform: translateY(26px);
+  transition: opacity 0.7s var(--ease), transform 0.8s var(--ease);
+}
+.pg-rv.pg-in { opacity: 1; transform: none; }
+
+/* ─── Header ────────────────────────────────────────────────────────── */
+/* Sticky, not fixed: sticky keeps the nav in flow, so it cannot overlap the
+   first section no matter how the page is themed. */
+.pg-nav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  height: 100µ;
+  min-height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5em;
+  padding: 0 var(--gut);
+  background: var(--pg-nav-bg);
+  color: var(--pg-nav-fg);
+  border-bottom: 2px solid var(--pg-nav-line);
+}
+.pg-nav-dark {
+  --pg-nav-bg: var(--ink);
+  --pg-nav-fg: #fff;
+  --pg-nav-line: rgba(255, 255, 255, 0.18);
+}
+.pg-nav-light {
+  --pg-nav-bg: var(--cream);
+  --pg-nav-fg: var(--ink);
+  --pg-nav-line: rgba(16, 26, 92, 0.18);
+}
+
+.pg-logo {
+  font-family: var(--ff-d);
+  font-size: 34µ;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  transition: transform 0.6s var(--spring);
+}
+.pg-logo:hover { transform: scale(1.04) rotate(-2deg); }
+.pg-logo em { font-style: normal; color: var(--coral-3d); }
+
+.pg-nav-links {
+  display: flex;
+  gap: 40µ;
+  margin-left: auto;
+  margin-right: 30µ;
+  font-size: 16µ;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.pg-nav-links a { position: relative; padding: 0.4em 0; }
+.pg-nav-links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.45s var(--ease);
+}
+.pg-nav-links a[aria-current="page"]::after,
+.pg-nav-links a:hover::after { transform: scaleX(1); transform-origin: left; }
+
+/* The homepage pins .pill to the nav's top-right corner and hides it under
+   760px. Here it is a flow item in a flex row, so both have to be undone. */
+.pg-nav .pill {
+  /* `relative`, not `static`. The pill's hover fill is an absolutely
+     positioned ::before with inset 0, so it anchors to the nearest positioned
+     ancestor. Made static, that ancestor became the sticky nav, so the fill
+     stretched to the full nav width and painted a coral bar across the page
+     just below the header, since it rests at translateY(101%). */
+  position: relative;
+  /* the base rule carries `right`/`top` for the homepage's absolute placement.
+     Under `relative` those stop being placement and become a shift, which
+     dragged the pill left into the nav links. Clear them. */
+  right: auto;
+  top: auto;
+  width: auto;
+  height: 52µ;
+  min-height: 38px;
+  padding: 0 26µ;
+  font-size: 16µ;
+  flex: 0 0 auto;
+}
+
+/* ─── Footer additions ─────────────────────────────────────────────── */
+/* .foot, .ft-mark, .ft-row and .to-top come from the homepage untouched. Only
+   the extra contact row below the wordmark is new. */
+.pg-ft-extra {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6em 2.4em;
+  margin-bottom: 36µ;
+  font-size: 18µ;
+  font-weight: 600;
+}
+.pg-ft-extra a { text-decoration: underline; text-underline-offset: 0.25em; }
+.pg-ft-extra a:hover { color: var(--yellow); }
+
+/* ─── Type scale ───────────────────────────────────────────────────── */
+.pg-h1 {
+  margin: 24µ 0 0;
+  font-size: 190µ;
+  /* .big-title supplies the family, the 0.86 leading and the uppercase */
+}
+.pg-h2 { margin: 20µ 0 0; font-size: 120µ; }
+.pg-h3 {
+  margin: 0;
+  font-family: var(--ff-d);
+  font-weight: 400;
+  font-size: 54µ;
+  line-height: 0.92;
+  text-transform: uppercase;
+}
+.pg-lead {
+  margin: 34µ 0 0;
+  max-width: 24em;
+  font-size: 30µ;
+  line-height: 1.32;
+  font-weight: 500;
+}
+.pg-body {
+  margin: 20µ 0 0;
+  max-width: 34em;
+  font-size: 21µ;
+  line-height: 1.55;
+}
+.pg-body-wide { max-width: 44em; }
+.pg-meta {
+  margin: 0;
+  font-size: 15µ;
+  font-weight: 800;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  opacity: 0.72;
+}
+
+/* the count line under a page title: big numeral, small label */
+.pg-tally {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 60µ;
+  margin-top: 60µ;
+  border-top: 2px solid currentColor;
+  padding-top: 26µ;
+}
+.pg-tally div { display: grid; }
+.pg-tally b {
+  font-family: var(--ff-d);
+  font-weight: 400;
+  font-size: 80µ;
+  line-height: 0.9;
+  font-variant-numeric: tabular-nums;
+}
+.pg-tally span {
+  font-size: 14µ;
+  font-weight: 800;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+
+/* ─── /work: the four deep cases as full-bleed rows ────────────────── */
+.pg-rows { display: flex; flex-direction: column; }
+.pg-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background: var(--pg-c);
+  color: var(--pg-t);
+}
+.pg-row-body {
+  display: flex;
+  flex-direction: column;
+  padding: 90µ var(--gut);
+  min-width: 0;
+}
+.pg-row-body .case-tag { opacity: 0.8; }
+.pg-row-body .case-metric { margin-top: auto; padding-top: 40µ; }
+.pg-row-media {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+  background: rgba(0, 0, 0, 0.22);
+}
+/* Wide product shots crop to the row box. Top-aligned, because the useful part
+   of an interface screenshot is always its top. */
+.pg-row-media img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  max-width: none;
+}
+/* A 9:19 phone export cannot be cropped to 4:3 and still read, so it is
+   contained on a plate instead. */
+.pg-row-media[data-shape="phone"] {
+  display: grid;
+  place-items: center;
+  padding: 50µ;
+}
+.pg-row-media[data-shape="phone"] img {
+  position: static;
+  width: auto;
+  height: 100%;
+  /* the cover rule above sets `max-width: none` so the crop can exceed the
+     box. A contained shot must not, or its intrinsic width wins and a 750px
+     export runs straight out of the column. */
+  max-width: 100%;
+  object-fit: contain;
+}
+.pg-row-alt .pg-row-media { order: 2; }
+
+.pg-arrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 1em;
+  margin-top: 36µ;
+  align-self: flex-start;
+  border: 2px solid currentColor;
+  padding: 0.95em 1.3em;
+  font-size: 15µ;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  transition: background 0.35s, color 0.35s;
+}
+.pg-arrow i { font-style: normal; transition: transform 0.4s var(--spring); }
+/* Inverts against whatever card it sits on: the row's text colour becomes the
+   ground, the row's ground becomes the text. Outside a row (the next-project
+   link) there is no pair to invert, so it falls back to the brand yellow. */
+.pg-arrow:hover { background: var(--pg-t, var(--yellow)); color: var(--pg-c, var(--ink)); }
+.pg-arrow:hover i { transform: translateX(6px); }
+
+/* ─── /work: snapshot grid ─────────────────────────────────────────── */
+.pg-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+  margin-top: 70µ;
+}
+.pg-card {
+  background: var(--cream);
+  color: var(--ink);
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.pg-card-media {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+  background: rgba(16, 26, 92, 0.08);
+}
+.pg-card-media img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  max-width: none;
+  transition: transform 0.7s var(--ease);
+}
+.pg-card:hover .pg-card-media img { transform: scale(1.04); }
+.pg-card-txt { padding: 30µ 30µ 34µ; display: flex; flex-direction: column; gap: 10µ; }
+.pg-card-txt h3 {
+  margin: 0;
+  font-family: var(--ff-d);
+  font-weight: 400;
+  font-size: 44µ;
+  line-height: 0.95;
+  text-transform: uppercase;
+}
+.pg-card-txt p { margin: 0; font-size: 17µ; line-height: 1.4; }
+.pg-card-note {
+  font-weight: 800;
+  color: var(--purple);
+}
+
+/* ─── Case study: header facts ─────────────────────────────────────── */
+.pg-facts {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 30µ;
+  margin: 70µ 0 0;
+  border-top: 2px solid currentColor;
+  padding-top: 26µ;
+}
+.pg-facts div { min-width: 0; }
+.pg-facts dt {
+  font-size: 14µ;
+  font-weight: 800;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  opacity: 0.65;
+  margin-bottom: 8µ;
+}
+.pg-facts dd { margin: 0; font-size: 22µ; font-weight: 600; line-height: 1.25; }
+
+/* ─── Case study: process steps ────────────────────────────────────── */
+/* Same shape as the homepage process chapter: a hairline-separated list with
+   the numeral set in display type. Without the scroll stage there is nothing
+   to fade in and out, so every step reads at full strength. */
+.pg-steps { list-style: none; margin: 70µ 0 0; padding: 0; }
+.pg-steps li {
+  display: grid;
+  grid-template-columns: 120µ 1fr;
+  column-gap: 34µ;
+  align-items: start;
+  border-top: 2px solid rgba(255, 255, 255, 0.24);
+  padding: 34µ 0;
+}
+.pg-steps li:last-child { border-bottom: 2px solid rgba(255, 255, 255, 0.24); }
+.pg-step-n {
+  font-family: var(--ff-d);
+  font-weight: 400;
+  font-size: 90µ;
+  line-height: 0.82;
+  color: var(--yellow);
+  font-variant-numeric: tabular-nums;
+}
+.pg-steps h3 {
+  margin: 0;
+  font-family: var(--ff-d);
+  font-weight: 400;
+  font-size: 48µ;
+  line-height: 0.95;
+  text-transform: uppercase;
+}
+.pg-steps p { margin: 14µ 0 0; font-size: 20µ; line-height: 1.55; max-width: 38em; opacity: 0.92; }
+
+/* ─── Case study: screens ──────────────────────────────────────────── */
+.pg-shots { display: flex; flex-direction: column; gap: 60µ; margin-top: 70µ; }
+.pg-shot { margin: 0; }
+.pg-shot-box {
+  position: relative;
+  overflow: hidden;
+  background: rgba(16, 26, 92, 0.08);
+}
+/* aspect-ratio comes from the gallery data via an inline custom property, so
+   the box reserves its height before the file loads and nothing reflows */
+.pg-shot-box { aspect-ratio: var(--pg-ar, 16 / 9); }
+.pg-shot-box img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  max-width: none;
+}
+.pg-shot-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 40µ; }
+/* Phone exports sit in a row that scrolls sideways on narrow screens rather
+   than shrinking six 9:19 frames into illegible slivers. */
+.pg-phones {
+  display: flex;
+  gap: 26µ;
+  overflow-x: auto;
+  padding-bottom: 14µ;
+  scrollbar-width: thin;
+}
+.pg-phones .pg-shot { flex: 0 0 clamp(150px, 15vw, 300px); }
+.pg-phones .pg-shot-box { background: rgba(0, 0, 0, 0.18); }
+.pg-shot figcaption { margin-top: 14µ; }
+.pg-shot figcaption b {
+  display: block;
+  font-size: 15µ;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+.pg-shot figcaption span {
+  display: block;
+  margin-top: 6µ;
+  font-size: 17µ;
+  line-height: 1.4;
+  opacity: 0.78;
+}
+
+/* ─── Results and metrics bands ────────────────────────────────────── */
+.pg-nums {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300µ, 1fr));
+  gap: 2px;
+  margin-top: 70µ;
+  background: currentColor;
+}
+.pg-num {
+  background: var(--pg-num-bg, var(--navy));
+  padding: 56µ 44µ;
+  display: flex;
+  flex-direction: column;
+  gap: 16µ;
+  min-width: 0;
+}
+.pg-num b {
+  font-family: var(--ff-d);
+  font-weight: 400;
+  font-size: 130µ;
+  line-height: 0.82;
+  letter-spacing: -0.01em;
+  color: var(--yellow);
+  overflow-wrap: anywhere;
+}
+.pg-num span { font-size: 19µ; line-height: 1.35; font-weight: 600; }
+.pg-num small {
+  font-size: 14µ;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  opacity: 0.6;
+}
+
+/* ─── Testimonial ──────────────────────────────────────────────────── */
+.pg-quote { margin: 0; max-width: 30em; }
+.pg-quote blockquote {
+  margin: 30µ 0 0;
+  font-family: var(--ff-d);
+  font-weight: 400;
+  font-size: 64µ;
+  line-height: 0.94;
+  text-transform: uppercase;
+}
+.pg-quote figcaption {
+  margin-top: 40µ;
+  border-top: 2px solid currentColor;
+  padding-top: 22µ;
+  font-size: 19µ;
+  font-weight: 700;
+}
+.pg-quote figcaption span { display: block; font-weight: 500; opacity: 0.75; }
+
+/* ─── Next project ─────────────────────────────────────────────────── */
+.pg-next { display: block; }
+.pg-next:hover .pg-next-t { color: var(--yellow); }
+.pg-next-t {
+  margin: 20µ 0 0;
+  font-family: var(--ff-d);
+  font-weight: 400;
+  font-size: 140µ;
+  line-height: 0.88;
+  text-transform: uppercase;
+  transition: color 0.35s;
+}
+
+/* ─── /about: hero and photo ───────────────────────────────────────── */
+.pg-hero-grid {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 70µ;
+  align-items: end;
+}
+.pg-hero-grid > div { min-width: 0; }
+.pg-photo { position: relative; margin: 0; }
+.pg-photo-box {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 3 / 4;
+  background: var(--coral-3d);
+}
+.pg-photo-box img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  max-width: none;
+}
+.pg-photo figcaption {
+  margin-top: 16µ;
+  font-size: 15µ;
+  font-weight: 800;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  opacity: 0.72;
+}
+
+/* the full-bleed second portrait: a colour block with the image inside it */
+.pg-plate {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  align-items: stretch;
+}
+.pg-plate-txt { padding: 110µ var(--gut); display: flex; flex-direction: column; justify-content: center; }
+.pg-plate-img { position: relative; overflow: hidden; min-height: 600µ; }
+.pg-plate-img img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 20%;
+  max-width: none;
+}
+
+/* ─── /about: story columns ────────────────────────────────────────── */
+.pg-story { display: grid; grid-template-columns: repeat(3, 1fr); gap: 50µ; margin-top: 70µ; }
+.pg-story > div { min-width: 0; border-top: 2px solid currentColor; padding-top: 26µ; }
+.pg-story h3 {
+  margin: 0 0 16µ;
+  font-family: var(--ff-d);
+  font-weight: 400;
+  font-size: 44µ;
+  line-height: 0.95;
+  text-transform: uppercase;
+}
+.pg-story p { margin: 0; font-size: 19µ; line-height: 1.55; }
+/* `.pg-story p` outranks `.pg-meta` on specificity, so the eyebrow inside a
+   story column has to be restated rather than merely classed. */
+.pg-story .pg-meta { font-size: 15µ; margin-bottom: 14µ; }
+
+/* ─── /about: career timeline ──────────────────────────────────────── */
+/* .aw-list from the recognition chapter already is this list: year, name,
+   detail, shape, with the yellow hover bleed. Only the "now" badge is new. */
+.pg-time .aw-y { font-size: 0.8em; }
+.pg-time .aw-p span { display: block; opacity: 0.7; font-size: 0.85em; }
+.pg-now {
+  display: inline-block;
+  margin-left: 0.5em;
+  vertical-align: 0.22em;
+  background: var(--yellow);
+  color: var(--ink);
+  font-family: var(--ff);
+  font-size: 13µ;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  padding: 0.35em 0.7em;
+  border-radius: 999px;
+}
+
+/* ─── /about: capabilities ─────────────────────────────────────────── */
+.pg-caps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; margin-top: 70µ; background: rgba(16, 26, 92, 0.18); }
+.pg-cap { background: var(--cream); color: var(--ink); padding: 50µ 40µ; min-width: 0; }
+.pg-cap > b {
+  display: block;
+  font-family: var(--ff-d);
+  font-weight: 400;
+  font-size: 100µ;
+  line-height: 0.8;
+  color: var(--coral-3d);
+}
+.pg-cap h3 {
+  margin: 20µ 0 22µ;
+  font-family: var(--ff-d);
+  font-weight: 400;
+  font-size: 48µ;
+  line-height: 0.95;
+  text-transform: uppercase;
+}
+.pg-cap ul { list-style: none; margin: 0; padding: 0; }
+.pg-cap li {
+  border-top: 2px solid rgba(16, 26, 92, 0.18);
+  padding: 16µ 0;
+  font-size: 18µ;
+  line-height: 1.35;
+  font-weight: 600;
+}
+
+/* ─── Contact CTA ──────────────────────────────────────────────────── */
+.pg-cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 50µ;
+  margin-top: 50µ;
+}
+.pg-cta-row .ct-lines { min-width: 340µ; flex: 1 1 340µ; }
+
+/* ─── Reduced motion ───────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  /* The reveal is decoration, not navigation, so it is removed outright
+     rather than merely un-eased. The class still lands; it just does nothing. */
+  .pg-rv,
+  .pg-rv.pg-in {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .pg-logo,
+  .pg-nav-links a::after,
+  .pg-arrow,
+  .pg-arrow i,
+  .pg-card-media img,
+  .pg-next-t { transition: none; }
+  .pg-card:hover .pg-card-media img { transform: none; }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   Phone and portrait. The artboard unit is re-based on 820px up here, so
+   anything that must stay legible is restated in px rather than scaled down.
+   Target: no horizontal overflow at 390px.
+   ═══════════════════════════════════════════════════════════════════════ */
+@media (max-aspect-ratio: 1/1), (max-width: 760px) {
+  .pg { --pg-pad: 64px; }
+
+  .pg-nav { height: 64px; gap: 10px; padding: 0 18px; }
+  .pg-logo { font-size: 24px; }
+  .pg-nav-links { gap: 16px; margin-right: 14px; font-size: 10px; letter-spacing: 0.14em; }
+  /* the homepage hides .pill below this width in favour of a burger; with only
+     two links there is no burger here, so it comes back */
+  .pg-nav .pill {
+    display: grid;
+    height: 38px;
+    padding: 0 14px;
+    font-size: 10.5px;
+    letter-spacing: 0.1em;
+  }
+  .pg-nav .pill span { top: 0; }
+
+  .pg-h1 { font-size: min(17vw, 92px); margin-top: 16px; }
+  .pg-h2 { font-size: min(13vw, 68px); }
+  .pg-h3 { font-size: 30px; }
+  .pg-lead { font-size: 19px; margin-top: 22px; }
+  .pg-body { font-size: 16px; margin-top: 16px; }
+  .pg-meta, .pg-facts dt { font-size: 11px; letter-spacing: 0.18em; }
+
+  .pg-tally { gap: 28px; margin-top: 34px; padding-top: 18px; }
+  .pg-tally b { font-size: 44px; }
+  .pg-tally span { font-size: 10px; }
+
+  .pg-row, .pg-plate, .pg-shot-pair { grid-template-columns: 1fr; }
+  .pg-row-body { padding: 34px 18px 40px; }
+  .pg-row-body .case-metric { padding-top: 24px; }
+  /* media always leads on a single column, whichever side it took on desktop */
+  .pg-row-alt .pg-row-media { order: 0; }
+  .pg-row-media { aspect-ratio: 16 / 11; }
+  .pg-row-media[data-shape="phone"] { padding: 22px; aspect-ratio: 4 / 3; }
+  .pg-arrow { margin-top: 22px; font-size: 11px; padding: 0.85em 1.1em; }
+
+  .pg-grid, .pg-caps { grid-template-columns: 1fr; margin-top: 34px; }
+  .pg-card-txt { padding: 18px 18px 24px; }
+  .pg-card-txt h3 { font-size: 28px; }
+  .pg-card-txt p { font-size: 14px; }
+
+  .pg-facts { grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 34px; padding-top: 18px; }
+  .pg-facts dd { font-size: 16px; }
+
+  .pg-steps { margin-top: 34px; }
+  .pg-steps li { grid-template-columns: 54px 1fr; column-gap: 14px; padding: 20px 0; }
+  .pg-step-n { font-size: 40px; }
+  .pg-steps h3 { font-size: 24px; }
+  .pg-steps p { font-size: 15px; margin-top: 10px; }
+
+  .pg-shots { gap: 32px; margin-top: 34px; }
+  .pg-shot-pair { gap: 32px; }
+  .pg-phones { gap: 12px; }
+  .pg-phones .pg-shot { flex: 0 0 150px; }
+  .pg-shot figcaption b { font-size: 11px; }
+  .pg-shot figcaption span { font-size: 14px; }
+
+  .pg-nums { grid-template-columns: 1fr; margin-top: 34px; }
+  .pg-num { padding: 28px 20px; gap: 10px; }
+  .pg-num b { font-size: 60px; }
+  .pg-num span { font-size: 15px; }
+  .pg-num small { font-size: 10px; }
+
+  .pg-quote blockquote { font-size: 34px; margin-top: 18px; }
+  .pg-quote figcaption { font-size: 15px; margin-top: 24px; padding-top: 16px; }
+  .pg-next-t { font-size: min(15vw, 76px); }
+
+  .pg-hero-grid, .pg-story { grid-template-columns: 1fr; gap: 34px; }
+  .pg-story { margin-top: 34px; }
+  .pg-story h3 { font-size: 28px; }
+  .pg-story p { font-size: 15px; }
+  .pg-photo figcaption { font-size: 11px; }
+  .pg-plate-txt { padding: 48px 18px; }
+  .pg-plate-img { min-height: 0; aspect-ratio: 4 / 3; }
+
+  .pg-now { font-size: 9px; letter-spacing: 0.12em; }
+  /* .aw-list hides .aw-p at this width, which is fine for an award (the prize
+     name is the point) and wrong for a job (the role is the point). The row
+     stacks into one column instead, and the decorative shape goes. */
+  .pg-time li { grid-template-columns: 1fr; row-gap: 4px; padding: 16px 0; }
+  .pg-time .aw-sh { display: none; }
+  .pg-time .aw-p { display: block; font-size: 14px; }
+  .pg-time .aw-n { font-size: 26px; }
+  .pg-story .pg-meta { font-size: 11px; margin-bottom: 10px; }
+
+  .pg-cap { padding: 28px 20px; }
+  .pg-cap > b { font-size: 52px; }
+  .pg-cap h3 { font-size: 26px; margin: 12px 0 14px; }
+  .pg-cap li { font-size: 15px; padding: 12px 0; }
+
+  .pg-cta-row { gap: 28px; margin-top: 28px; }
+  .pg-cta-row .ct-lines { min-width: 0; flex-basis: 100%; }
+
+  .pg-ft-extra { font-size: 13px; gap: 0.5em 1.4em; margin-bottom: 24px; }
 }

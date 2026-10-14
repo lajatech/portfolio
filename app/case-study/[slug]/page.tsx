@@ -1,17 +1,12 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { caseStudies } from "@/lib/data";
-import Nav from "@/components/layout/Nav";
-import Footer from "@/components/layout/Footer";
-import CaseStudyHeader from "@/components/case-study/CaseStudyHeader";
-import ProblemStatement from "@/components/case-study/ProblemStatement";
-import ProcessSection from "@/components/case-study/ProcessSection";
-import ScreensGallery from "@/components/case-study/ScreensGallery";
-import ResultsSection from "@/components/case-study/ResultsSection";
-import TestimonialBlock from "@/components/case-study/TestimonialBlock";
-import NextProject from "@/components/case-study/NextProject";
-import CustomCursor from "@/components/ui/CustomCursor";
+import CaseStudyView from "@/components/pages/CaseStudyView";
+import PageChrome from "@/components/pages/PageChrome";
 
+/* Both of these are unchanged from the previous version of this route: the
+   four cases are statically generated at build time, and each one keeps the
+   title and description it is already indexed under. */
 export function generateStaticParams() {
   return caseStudies.map((cs) => ({ slug: cs.slug }));
 }
@@ -38,23 +33,11 @@ export default async function CaseStudyPage({
   const { slug } = await params;
   const cs = caseStudies.find((c) => c.slug === slug);
   if (!cs) notFound();
-  // Not yet ported to the new design. The `legacy` wrapper scopes the
-  // previous stylesheet so it cannot collide with the rebuilt homepage.
 
+  // The header sits on the cream case header, so its foreground goes dark.
   return (
-    <div className="legacy">
-      <CustomCursor />
-      <Nav />
-      <main>
-        <CaseStudyHeader cs={cs} />
-        <ProblemStatement cs={cs} />
-        <ProcessSection cs={cs} />
-        <ScreensGallery cs={cs} />
-        <ResultsSection cs={cs} />
-        <TestimonialBlock cs={cs} />
-        <NextProject cs={cs} />
-      </main>
-      <Footer />
-    </div>
+    <PageChrome theme="light" current="work">
+      <CaseStudyView cs={cs} />
+    </PageChrome>
   );
 }

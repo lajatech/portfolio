@@ -1,34 +1,6 @@
 import type { Metadata } from "next";
-import {
-  Anton,
-  Geist,
-  Instrument_Serif,
-  JetBrains_Mono,
-  Manrope,
-} from "next/font/google";
+import { Anton, Manrope } from "next/font/google";
 import "./globals.css";
-
-const geist = Geist({
-  variable: "--font-body",
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600"],
-  display: "swap",
-});
-
-const jetbrainsMono = JetBrains_Mono({
-  variable: "--font-mono",
-  subsets: ["latin"],
-  weight: ["400", "500"],
-  display: "swap",
-});
-
-const instrumentSerif = Instrument_Serif({
-  variable: "--font-editorial",
-  subsets: ["latin"],
-  style: ["italic"],
-  weight: "400",
-  display: "swap",
-});
 
 /* The rebuilt homepage runs on these two. Anton ships a single weight by
    design: hierarchy comes from scale and the artboard unit, not from weight. */
@@ -40,8 +12,6 @@ const anton = Anton({
 });
 
 const manrope = Manrope({
-  // deliberately not --font-body: the routes still on the previous design bind
-  // that to Geist, and reassigning it would restyle all of them
   variable: "--font-manrope",
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700", "800"],
@@ -191,7 +161,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geist.variable} ${jetbrainsMono.variable} ${instrumentSerif.variable} ${anton.variable} ${manrope.variable}`}
+      className={`${anton.variable} ${manrope.variable}`}
       suppressHydrationWarning
     >
       <head>
