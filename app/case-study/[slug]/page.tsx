@@ -37,9 +37,11 @@ export default async function CaseStudyPage({
   const { slug } = await params;
   const cs = caseStudies.find((c) => c.slug === slug);
   if (!cs) notFound();
+  // Not yet ported to the new design. The `legacy` wrapper scopes the
+  // previous stylesheet so it cannot collide with the rebuilt homepage.
 
   return (
-    <>
+    <div className="legacy">
       <Nav />
       <main>
         <CaseStudyHeader cs={cs} />
@@ -51,6 +53,6 @@ export default async function CaseStudyPage({
         <NextProject cs={cs} />
       </main>
       <Footer />
-    </>
+    </div>
   );
 }

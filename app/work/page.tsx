@@ -11,8 +11,10 @@ export const metadata: Metadata = {
 };
 
 export default function WorkPage() {
+  // Not yet ported to the new design. The `legacy` wrapper scopes the
+  // previous stylesheet so it cannot collide with the rebuilt homepage.
   return (
-    <>
+    <div className="legacy">
       <Nav />
       <main>
         {/* Page header */}
@@ -54,6 +56,6 @@ export default function WorkPage() {
         <ProjectGrid />
       </main>
       <Footer />
-    </>
+    </div>
   );
 }

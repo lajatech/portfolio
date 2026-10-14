@@ -218,9 +218,12 @@ export const caseStudies: CaseStudy[] = [
           "The visual direction had to read as premium sports media — not a mobile game. Energy without loudness. Confident type, restrained colour, high contrast where the action is.",
       },
     ],
+    // No outcome metrics were recorded for this engagement, so this case is
+    // presented on scope rather than results. The previous "15+ AI agents"
+    // figure here belonged to Workergen and was misattributed.
     results: [
-      { value: "15+", label: "AI agents and workflows designed" },
-      { value: "2", label: "core gamification systems built" },
+      { value: "2", label: "core systems designed: gamification and trivia" },
+      { value: "Lead", label: "role across the full product lifecycle" },
     ],
     nextSlug: "workergen",
     nextTitle: "Workergen AI Marketplace",

@@ -12,8 +12,10 @@ export const metadata: Metadata = {
 };
 
 export default function AboutPage() {
+  // Not yet ported to the new design. The `legacy` wrapper scopes the
+  // previous stylesheet so it cannot collide with the rebuilt homepage.
   return (
-    <>
+    <div className="legacy">
       <Nav />
       <main>
         {/* Hero */}
@@ -482,6 +484,6 @@ export default function AboutPage() {
         </section>
       </main>
       <Footer />
-    </>
+    </div>
   );
 }
