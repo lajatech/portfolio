@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect } from "react";
 import { useStage } from "@/components/stage/ScrollStage";
 import { NAV_LINKS } from "./Nav";
@@ -43,22 +44,31 @@ export default function MobileMenu({ open, onClose }: Props) {
         <i />
       </div>
       <nav className="menu-links" aria-label="Primary, mobile">
-        {NAV_LINKS.map((l, i) => (
-          <a
-            key={l.id}
-            href={`#${l.id}`}
-            data-go={l.id}
-            onClick={(e) => {
-              e.preventDefault();
-              // close first: the lock has to lift before the smooth scroll runs
-              onClose();
-              scrollTo(l.id);
-            }}
-          >
-            <small>{String(i + 1).padStart(2, "0")}</small>
-            {l.label}
-          </a>
-        ))}
+        {NAV_LINKS.map((l, i) => {
+          const n = <small>{String(i + 1).padStart(2, "0")}</small>;
+          return l.kind === "chapter" ? (
+            <a
+              key={l.id}
+              href={`#${l.id}`}
+              data-go={l.id}
+              onClick={(e) => {
+                e.preventDefault();
+                // close first: the lock has to lift before the smooth scroll runs
+                onClose();
+                scrollTo(l.id);
+              }}
+            >
+              {n}
+              {l.label}
+            </a>
+          ) : (
+            // a real navigation, so the menu only has to release the body lock
+            <Link key={l.href} href={l.href} onClick={onClose}>
+              {n}
+              {l.label}
+            </Link>
+          );
+        })}
       </nav>
     </div>
   );

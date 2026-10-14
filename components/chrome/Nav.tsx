@@ -7,6 +7,7 @@ import {
   useState,
   type MouseEvent,
 } from "react";
+import Link from "next/link";
 import { useStage, useStageFrame } from "@/components/stage/ScrollStage";
 import type { ChapterId } from "@/lib/motion";
 import MobileMenu from "./MobileMenu";
@@ -23,11 +24,22 @@ import MobileMenu from "./MobileMenu";
  * frequency rather than frame frequency.
  */
 
-export const NAV_LINKS: ReadonlyArray<{ id: ChapterId; label: string }> = [
-  { id: "work", label: "Work" },
-  { id: "process", label: "Process" },
-  { id: "capabilities", label: "Capabilities" },
-  { id: "contact", label: "Contact" },
+/* Most of the header points at chapters of this page, which are scrolled to
+   rather than jumped to, so the stage's lead-in offsets survive. About is a
+   separate route, so the list has to carry both kinds: a chapter link that
+   calls `scrollTo`, and a route link that navigates. Collapsing the two (an
+   `#about` anchor, say) would scroll to nothing, and typing About as a
+   ChapterId would let it reach `scrollTo` and silently do the same. */
+export type NavLink =
+  | { kind: "chapter"; id: ChapterId; label: string }
+  | { kind: "route"; href: string; label: string };
+
+export const NAV_LINKS: ReadonlyArray<NavLink> = [
+  { kind: "chapter", id: "work", label: "Work" },
+  { kind: "chapter", id: "process", label: "Process" },
+  { kind: "chapter", id: "capabilities", label: "Capabilities" },
+  { kind: "route", href: "/about", label: "About" },
+  { kind: "chapter", id: "contact", label: "Contact" },
 ];
 
 /** px/s of downward scroll before the nav retracts. */
@@ -105,11 +117,19 @@ export default function Nav() {
         </a>
 
         <nav className="links" aria-label="Primary">
-          {NAV_LINKS.map((l) => (
-            <a key={l.id} href={`#${l.id}`} data-go={l.id} onClick={go}>
-              {l.label}
-            </a>
-          ))}
+          {NAV_LINKS.map((l) =>
+            l.kind === "chapter" ? (
+              <a key={l.id} href={`#${l.id}`} data-go={l.id} onClick={go}>
+                {l.label}
+              </a>
+            ) : (
+              // no `data-go`, so the frame loop's active-link pass never marks
+              // it: nothing on this page can be the About chapter
+              <Link key={l.href} href={l.href}>
+                {l.label}
+              </Link>
+            ),
+          )}
         </nav>
 
         <a className="pill" href="#contact" data-go="contact" onClick={go}>
