@@ -781,7 +781,7 @@ body[data-theme="yellow"] .pill { background: var(--navy); color: var(--yellow);
   clip-path: inset(0% 0% 0% 0% round 6µ);
 }
 .case-info {
-  padding: 64µ 56µ;
+  padding: 48µ 48µ;
   display: flex;
   flex-direction: column;
   position: relative;
@@ -793,10 +793,10 @@ body[data-theme="yellow"] .pill { background: var(--navy); color: var(--yellow);
   height: 2px;
   background: currentColor;
   opacity: 0.5;
-  margin-bottom: 26µ;
+  margin-bottom: 16µ;
 }
 .case-tag {
-  margin: 0 0 18µ;
+  margin: 0 0 12µ;
   font-size: 15µ;
   letter-spacing: 0.32em;
   font-weight: 800;
@@ -806,15 +806,41 @@ body[data-theme="yellow"] .pill { background: var(--navy); color: var(--yellow);
   margin: 0;
   font-family: var(--ff-d);
   font-weight: 400;
-  font-size: 104µ;
+  /* Down from 104µ. The card is a fixed height, and it now carries six parts
+     (industry, name, problem, number, resolution, control) where it carried
+     four. Something had to give, and the display size is the part with the
+     most slack in it. */
+  font-size: 86µ;
   line-height: 0.86;
   text-transform: uppercase;
 }
+/* The two excerpt lines. Kept to body type: they exist to give the number
+   something to be a number of, not to be read as prose.
+
+   Both are clamped. The card height is fixed by the horizontal track, so a
+   case whose problem line runs long cannot be allowed to push the button off
+   the bottom. Two lines each is the budget, and `lib/data.ts` is written to
+   fit it. */
+.case-excerpt {
+  margin: 14µ 0 0;
+  font-size: 18µ;
+  line-height: 1.38;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  overflow: hidden;
+}
+.case-excerpt-after {
+  margin-top: 10µ;
+  font-size: 16µ;
+  opacity: 0.84;
+}
 /* the metric is the point of the card, so it gets display type */
 .case-metric {
-  margin: 24µ 0 0;
+  margin: 16µ 0 0;
   font-family: var(--ff-d);
-  font-size: 76µ;
+  font-size: 62µ;
   line-height: 0.9;
   letter-spacing: -0.01em;
 }
@@ -881,18 +907,33 @@ body[data-theme="yellow"] .pill { background: var(--navy); color: var(--yellow);
 /* A device mockup is not a screenshot. It arrives on a transparent ground, so
    it must be contained and allowed to float on the card colour: the cover crop
    above would slice the hardware in half. */
-.case-img[data-shape="mockup"] {
-  display: grid;
-  place-items: center;
-  padding: 34µ 26µ;
-}
+/* The inset is written on the image rather than as padding on the box, because
+   the image stays absolutely positioned. A percentage height on a static image
+   inside this card does not resolve: the card's image row is `1fr`, which is
+   indefinite for percentage resolution, so `height: 100%` silently falls back
+   to the intrinsic ratio and a portrait mockup grows past the row and is
+   clipped. The image stays absolutely positioned at `inset: 0`, where the
+   percentages resolve against the card's padding box, which is definite.
+
+   The breathing room is the image's own padding rather than the box's, because
+   padding on the box does not move an absolutely positioned child, and insets
+   on the child are ignored for a replaced element with `width: auto` (it takes
+   its intrinsic width instead and runs off the card). `object-fit` contains
+   within the content box, so padding is what actually insets the picture.
+
+   No padding at the bottom: every mockup is framed with its subject running
+   off the bottom of its own canvas (hands cut mid-forearm, the laptop on its
+   shadow), so floating it clear of the edge leaves that cut hanging in mid
+   air. Against the edge it reads as the subject continuing past the card,
+   which is what `object-position: center bottom` finishes. */
 .case-img[data-shape="mockup"] img {
-  position: static;
-  inset: auto;
+  inset: 0;
   width: 100%;
   height: 100%;
-  max-width: 100%;
+  box-sizing: border-box;
+  padding: 34µ 26µ 0;
   object-fit: contain;
+  object-position: center bottom;
 }
 
 .wk-progress {
@@ -1784,11 +1825,17 @@ html.noload #loader { display: none; }
   .case-info { padding: 22px 22px 16px; }
   .case-tag { font-size: 11px; margin-bottom: 10px; }
   .case h3 { font-size: 40px; }
-  .case-metric { font-size: 38px; margin-top: 12px; }
+  .case-metric { font-size: 38px; margin-top: 10px; }
   .case-metric small { font-size: 10px; }
-  .case-btn { margin-top: 14px; font-size: 11px; padding: 0.8em 1em; }
+  /* One excerpt only on a phone. The card is a fixed height and the mockup
+     needs most of it; two paragraphs plus the number plus the button left the
+     device a sliver. The problem line is the one that earns its space, and the
+     resolution line is on the case study page a tap away. */
+  .case-excerpt { margin-top: 10px; font-size: 13px; line-height: 1.34; max-width: none; }
+  .case-excerpt-after { display: none; }
+  .case-btn { margin-top: 12px; font-size: 11px; padding: 0.8em 1em; }
   .case-plate b { font-size: 90px; }
-  .case-img[data-shape="mockup"] { padding: 14px 10px; }
+  .case-img[data-shape="mockup"] img { padding: 14px 10px 0; }
   .wk-progress { bottom: 28px; left: 22px; right: 22px; }
 
   .process { height: 420vh; }
@@ -2109,6 +2156,9 @@ html.noload #loader { display: none; }
 }
 .pg-row-body .case-tag { opacity: 0.8; }
 .pg-row-body .case-metric { margin-top: auto; padding-top: 40µ; }
+/* The resolution line, under the number. Set a step down from `problem` so the
+   eye still lands on the figure between them. */
+.pg-row-after { padding-top: 16µ; font-size: 19µ; opacity: 0.86; }
 .pg-row-media {
   position: relative;
   overflow: hidden;
@@ -2147,9 +2197,11 @@ html.noload #loader { display: none; }
    colour carry the space around it. The box is squarer than the 4:3 used for
    cropped screenshots, because a contained mockup wastes a wide box's corners. */
 .pg-row-media[data-shape="mockup"] {
-  display: grid;
-  place-items: center;
-  padding: 36µ;
+  /* The inset lives on the image's own padding, for the reason given on
+     `.case-img[data-shape="mockup"] img` above: a static image's `height: 100%`
+     does not reliably resolve here, and a portrait mockup then sizes to its
+     intrinsic ratio and is clipped by the row. */
+  padding: 0;
   aspect-ratio: 5 / 4;
   /* No panel behind a mockup. The base rule tints the media box so a cropped
      screenshot has an edge, but a transparent device wants the row's own
@@ -2157,12 +2209,13 @@ html.noload #loader { display: none; }
   background: none;
 }
 .pg-row-media[data-shape="mockup"] img {
-  position: static;
-  inset: auto;
+  inset: 0;
   width: 100%;
   height: 100%;
-  max-width: 100%;
+  box-sizing: border-box;
+  padding: 36µ 36µ 0;
   object-fit: contain;
+  object-position: center bottom;
 }
 
 .pg-row-alt .pg-row-media { order: 2; }
@@ -2582,10 +2635,32 @@ html.noload #loader { display: none; }
   .pg-row-body { padding: 34px 18px 40px; }
   .pg-row-body .case-metric { padding-top: 24px; }
   /* media always leads on a single column, whichever side it took on desktop */
-  .pg-row-alt .pg-row-media { order: 0; }
+  /* One column, and the copy comes first in it. On a phone the row is read
+     top to bottom, so leading with the mockup makes every card open on a
+     picture with no idea what it is of. Leading with the copy also puts the
+     mockup against the bottom edge of the card, which is where its subject is
+     cut off, so the device runs out of the card instead of floating in it.
+     The alt rows' reversal is a desktop device only, hence the reset. */
+  .pg-row-body { order: 1; }
+  .pg-row-media, .pg-row-alt .pg-row-media { order: 2; }
   .pg-row-media { aspect-ratio: 16 / 11; }
   .pg-row-media[data-shape="phone"] { padding: 22px; aspect-ratio: 4 / 3; }
-  .pg-row-media[data-shape="mockup"] { padding: 18px; aspect-ratio: 4 / 3; }
+  .pg-row-media[data-shape="mockup"] {
+    padding: 0 18px;
+    /* No fixed ratio. The mockups differ in shape, and forcing one made the
+       taller phone export overflow a box too short for it, clipping the
+       device through the middle. In one column there is no second column to
+       stay level with, so the row height can simply follow the image. That
+       only works while the image is in flow, hence the return to `static`. */
+    aspect-ratio: auto;
+  }
+  .pg-row-media[data-shape="mockup"] img {
+    position: static;
+    height: auto;
+    padding: 0;
+  }
+  .pg-row-body { padding-bottom: 28px; }
+  .pg-row-after { padding-top: 10px; font-size: 14px; }
   .pg-arrow { margin-top: 22px; font-size: 11px; padding: 0.85em 1.1em; }
 
   .pg-grid, .pg-caps { grid-template-columns: 1fr; margin-top: 34px; }

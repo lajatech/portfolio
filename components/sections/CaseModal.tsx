@@ -29,6 +29,8 @@ export type WorkCase = {
   /** card foreground, chosen for contrast against `c` */
   t: string;
   body: string;
+  /** the resolution line, rendered on the card under the number */
+  after: string;
   stats: { value: string; label: string }[];
   image?: string;
 };

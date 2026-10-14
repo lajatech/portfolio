@@ -107,6 +107,8 @@ const CASES: WorkCase[] = caseStudies.map((cs, i) => {
     t: pal.t,
     // the problem line is the sharper read of the two; tagline is the backstop
     body: cs.problem || cs.tagline,
+    // what the product is now, read after the number
+    after: cs.tagline,
     stats: cs.results.slice(0, 3),
     image: pres.image,
   };
@@ -288,10 +290,15 @@ export default function Work() {
                   <br />
                   {cs.titleBottom}
                 </h3>
+                {/* Industry, name, problem, number, resolution, control. The
+                    card used to jump from the name straight to the number,
+                    which left the figure with nothing to be a figure of. */}
+                <p className="case-excerpt">{cs.body}</p>
                 <p className="case-metric">
                   {cs.metric}
                   <small>{cs.metricLabel}</small>
                 </p>
+                <p className="case-excerpt case-excerpt-after">{cs.after}</p>
                 {/* the real control. The article's click handler is a
                     convenience for the pointer; this is what keyboard and
                     assistive tech reach. */}

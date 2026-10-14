@@ -138,7 +138,7 @@ export const caseStudies: CaseStudy[] = [
     year: "2023–2025",
     duration: "2 years",
     type: "deep",
-    tagline: "A gated-community management platform — designed system-first, shipped product-second.",
+    tagline: "A gated-community management platform, designed system-first and shipped product-second.",
     problem:
       "Their website had a 90%+ bounce rate. Visitors left within 4 seconds.",
     problemDetail:
@@ -255,7 +255,7 @@ export const caseStudies: CaseStudy[] = [
       {
         heading: "AI tool suite: Email Automation, AutoBlog AI, Logo Studio",
         body:
-          "Designed the UX of individual AI tools — how users configure an agent, what feedback they receive, how outputs are presented. Each tool required its own mental model, so the design system did the heavy lifting of consistency.",
+          "Designed the UX of individual AI tools: how users configure an agent, what feedback they receive, how outputs are presented. Each tool required its own mental model, so the design system did the heavy lifting of consistency.",
       },
     ],
     results: [

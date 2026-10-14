@@ -141,6 +141,11 @@ export default function WorkView() {
                       <small>{shortLabel(metric.label)}</small>
                     </p>
                   ) : null}
+                  {/* The second excerpt. `problem` states the before, the
+                      number states the shift, and the tagline states what the
+                      product is now, so the three read as one argument rather
+                      than three unrelated blocks. */}
+                  <p className="pg-body pg-row-after">{cs.tagline}</p>
                   <Link className="pg-arrow" href={`/case-study/${cs.slug}`}>
                     <span>Read the case</span>
                     <i aria-hidden="true">→</i>
