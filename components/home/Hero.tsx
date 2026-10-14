@@ -1,13 +1,67 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Link from "next/link";
 
 const ease: [number, number, number, number] = [0.2, 0.8, 0.2, 1];
 
+const roles = [
+  "product designer.",
+  "ux lead.",
+  "design systems architect.",
+  "conversion specialist.",
+];
+
+function useTypewriter(
+  words: string[],
+  typeSpeed = 72,
+  deleteSpeed = 38,
+  pauseMs = 2200,
+) {
+  const [display, setDisplay] = useState(words[0]);
+  const [wordIdx, setWordIdx] = useState(0);
+  const [phase, setPhase] = useState<"pause" | "deleting" | "typing">("pause");
+
+  useEffect(() => {
+    const word = words[wordIdx % words.length];
+
+    if (phase === "pause") {
+      const t = setTimeout(() => setPhase("deleting"), pauseMs);
+      return () => clearTimeout(t);
+    }
+    if (phase === "deleting") {
+      if (display.length === 0) {
+        setWordIdx((i) => (i + 1) % words.length);
+        setPhase("typing");
+        return;
+      }
+      const t = setTimeout(
+        () => setDisplay((d) => d.slice(0, -1)),
+        deleteSpeed,
+      );
+      return () => clearTimeout(t);
+    }
+    if (phase === "typing") {
+      const target = words[wordIdx % words.length];
+      if (display.length === target.length) {
+        setPhase("pause");
+        return;
+      }
+      const t = setTimeout(
+        () => setDisplay(target.slice(0, display.length + 1)),
+        typeSpeed,
+      );
+      return () => clearTimeout(t);
+    }
+  }, [display, phase, wordIdx, words, typeSpeed, deleteSpeed, pauseMs]);
+
+  return display;
+}
+
 export default function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
+  const role = useTypewriter(roles);
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -16,8 +70,6 @@ export default function Hero() {
 
   const titleY = useTransform(scrollYProgress, [0, 1], ["0%", "20%"]);
   const subtitleY = useTransform(scrollYProgress, [0, 1], ["0%", "12%"]);
-  const bgGlowY = useTransform(scrollYProgress, [0, 1], ["0%", "40%"]);
-  const opacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
 
   return (
     <section
@@ -34,24 +86,6 @@ export default function Hero() {
         overflow: "hidden",
       }}
     >
-      {/* Parallax ambient glow */}
-      <motion.div
-        aria-hidden="true"
-        style={{
-          position: "absolute",
-          top: "10%",
-          right: "-10%",
-          width: "700px",
-          height: "700px",
-          background: "var(--signal-deep)",
-          borderRadius: "50%",
-          filter: "blur(200px)",
-          opacity: 0.18,
-          pointerEvents: "none",
-          y: bgGlowY,
-        }}
-      />
-
       {/* Vignette */}
       <div
         aria-hidden="true"
@@ -67,34 +101,78 @@ export default function Hero() {
           transition={{ duration: 0.62, delay: 0.1, ease }}
           style={{ marginBottom: "var(--s-7)" }}
         >
-          <span className="pill pill-signal">
+          <span className="pill" style={{ borderColor: "var(--ash)", color: "var(--bone)" }}>
             Available for select projects
           </span>
         </motion.div>
 
-        {/* Main heading — parallax */}
+        {/* Main heading */}
         <motion.div style={{ y: titleY, maxWidth: "1100px" }}>
           <motion.h1
             className="t-display-xl"
-            style={{ color: "var(--veil)", marginBottom: "var(--s-3)" }}
+            style={{ color: "var(--veil)", marginBottom: "0.08em", lineHeight: 0.92 }}
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.72, delay: 0.2, ease }}
           >
-            Senior product
+            Senior
           </motion.h1>
+
+          {/* Typewriter role line — width reserved by invisible longest-role ghost */}
           <motion.div
-            className="t-editorial-xl"
-            style={{ color: "var(--mist)", marginBottom: "var(--s-7)" }}
+            className="hero-role-wrap"
+            style={{
+              marginBottom: "var(--s-7)",
+              display: "inline-flex",
+              alignItems: "center",
+              position: "relative",
+            }}
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.72, delay: 0.35, ease }}
           >
-            designer.
+            {/* Width reservation ghost — invisible, locks container to longest role */}
+            <span
+              aria-hidden="true"
+              className="t-editorial-xl hero-role-text"
+              style={{
+                visibility: "hidden",
+                whiteSpace: "nowrap",
+                pointerEvents: "none",
+              }}
+            >
+              design systems architect.
+            </span>
+            {/* Live animated text overlaid on top */}
+            <span
+              className="t-editorial-xl hero-role-text"
+              style={{
+                color: "var(--mist)",
+                display: "inline-flex",
+                alignItems: "baseline",
+                whiteSpace: "nowrap",
+                position: "absolute",
+                top: 0,
+                left: 0,
+              }}
+            >
+              {role}
+              <span
+                aria-hidden="true"
+                style={{
+                  display: "inline-block",
+                  width: "3px",
+                  height: "0.75em",
+                  background: "var(--bone)",
+                  marginLeft: "2px",
+                  animation: "cursor-blink 1.1s step-end infinite",
+                }}
+              />
+            </span>
           </motion.div>
         </motion.div>
 
-        {/* Sub-line — parallax at slower rate */}
+        {/* Sub-line */}
         <motion.p
           className="t-body-lg"
           style={{
@@ -107,7 +185,7 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.62, delay: 0.5, ease }}
         >
-          Outcomes-driven design. Every decision traced to a number — conversion,
+          Outcomes-driven design. Every decision traced to a number: conversion,
           retention, revenue. Currently leading at Volta Charger, Gold Coast.
         </motion.p>
 
@@ -122,10 +200,7 @@ export default function Hero() {
           <Link href="/work" className="btn-primary">
             View work →
           </Link>
-          <a
-            href="mailto:abdulmuizadelaja@gmail.com"
-            className="btn-secondary"
-          >
+          <a href="mailto:abdulmuizadelaja@gmail.com" className="btn-secondary">
             abdulmuizadelaja@gmail.com
           </a>
         </motion.div>
@@ -147,6 +222,31 @@ export default function Hero() {
           <span>6+ years · 80+ projects · 98% satisfaction</span>
         </motion.div>
       </div>
+
+      <style>{`
+        @keyframes cursor-blink {
+          0%, 100% { opacity: 1; }
+          50%       { opacity: 0; }
+        }
+        /* 80% of t-editorial-xl: clamp(64px,12vw,168px) → clamp(51px,9.6vw,134px) */
+        .hero-role-text {
+          font-size: clamp(51px, 9.6vw, 134px) !important;
+          line-height: 0.92 !important;
+        }
+        /* Desktop: fixed height = 0.92 × max font-size */
+        @media (min-width: 641px) {
+          .hero-role-wrap { height: clamp(47px, 8.8vw, 123px); }
+        }
+        /* Mobile: allow wrap, smaller font so longest role stays on-screen */
+        @media (max-width: 640px) {
+          .hero-role-text {
+            font-size: clamp(22px, 6vw, 42px) !important;
+            white-space: normal !important;
+            line-height: 1.15 !important;
+          }
+          .hero-role-wrap { min-height: 30px; }
+        }
+      `}</style>
     </section>
   );
 }

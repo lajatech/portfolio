@@ -60,7 +60,7 @@
      Swap --ff-d to "Special Gothic Expanded One" to run the site on Làjà's
      own brand face instead of Anton; nothing else needs to change. */
   --ff-d: var(--font-display), "Anton", "Impact", "Arial Narrow", sans-serif;
-  --ff: var(--font-body), "Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --ff: var(--font-manrope), "Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
 
   --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
   --spring: cubic-bezier(0.34, 1.56, 0.64, 1);

@@ -56,7 +56,7 @@ export default function SelectedWork() {
             style={{ marginBottom: "var(--s-9)" }}
           >
             <span className="t-meta" style={{ color: "var(--mist)" }}>
-              Selected work — 2021—Now
+              Selected work
             </span>
             <Link
               href="/work"
@@ -68,7 +68,19 @@ export default function SelectedWork() {
           </div>
         </ScrollReveal>
 
-        {/* Project list — editorial, not a grid */}
+        {/* Project list */}
+        <style>{`
+          .work-article {
+            display: grid;
+            grid-template-columns: 80px 1fr auto;
+            gap: var(--s-6);
+            align-items: start;
+          }
+          @media (max-width: 640px) {
+            .work-article { grid-template-columns: 48px 1fr; }
+            .work-metric  { display: none; }
+          }
+        `}</style>
         <div style={{ display: "flex", flexDirection: "column" }}>
           {featured.map((project, i) => (
             <ScrollReveal key={project.slug} delay={i * 0.08}>
@@ -78,20 +90,17 @@ export default function SelectedWork() {
                 style={{ textDecoration: "none" }}
               >
                 <article
+                  className="work-article"
                   style={{
                     padding: "var(--s-7) 0",
                     borderBottom: "1px solid var(--ash)",
-                    display: "grid",
-                    gridTemplateColumns: "80px 1fr auto",
-                    alignItems: "start",
-                    gap: "var(--s-6)",
                     transition: "background 180ms var(--ease-eerie)",
                   }}
                 >
                   {/* Index */}
                   <span
                     className="t-meta"
-                    style={{ color: "var(--signal)", paddingTop: "6px" }}
+                    style={{ color: "var(--mist)", paddingTop: "6px" }}
                   >
                     {project.index}
                   </span>
@@ -127,15 +136,15 @@ export default function SelectedWork() {
                     </div>
                   </div>
 
-                  {/* Right — metric + arrow */}
+                  {/* Right — metric + arrow (hidden on mobile via .work-metric) */}
                   <div
-                    className="flex flex-col items-end"
+                    className="work-metric flex flex-col items-end"
                     style={{ gap: "var(--s-2)", textAlign: "right" }}
                   >
                     <div>
                       <div
                         className="t-display-md"
-                        style={{ color: "var(--signal)", lineHeight: 1 }}
+                        style={{ color: "var(--veil)", lineHeight: 1 }}
                       >
                         {project.metric}
                       </div>
@@ -156,9 +165,8 @@ export default function SelectedWork() {
                       style={{
                         color: "var(--mist)",
                         fontSize: "20px",
-                        transition: "color 180ms var(--ease-eerie), transform 180ms var(--ease-eerie)",
+                        transition: "color 180ms var(--ease-eerie)",
                       }}
-                      className="group-hover:text-signal"
                     >
                       ↗
                     </span>
@@ -173,7 +181,6 @@ export default function SelectedWork() {
         <ScrollReveal delay={0.3}>
           <Link
             href="/case-study/workergen"
-            className="group"
             style={{ textDecoration: "none" }}
           >
             <div
@@ -201,7 +208,7 @@ export default function SelectedWork() {
                   className="flex items-center"
                   style={{ gap: "var(--s-3)", marginBottom: "var(--s-2)" }}
                 >
-                  <span className="t-meta" style={{ color: "var(--signal)" }}>
+                  <span className="t-meta" style={{ color: "var(--mist)" }}>
                     004
                   </span>
                   <span className="pill">Mini Case Study</span>

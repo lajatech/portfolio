@@ -3,6 +3,7 @@ import Nav from "@/components/layout/Nav";
 import Footer from "@/components/layout/Footer";
 import FeaturedProjects from "@/components/work/FeaturedProjects";
 import ProjectGrid from "@/components/work/ProjectGrid";
+import CustomCursor from "@/components/ui/CustomCursor";
 
 export const metadata: Metadata = {
   title: "Work — Làjà",
@@ -15,6 +16,7 @@ export default function WorkPage() {
   // previous stylesheet so it cannot collide with the rebuilt homepage.
   return (
     <div className="legacy">
+      <CustomCursor />
       <Nav />
       <main>
         {/* Page header */}
@@ -31,7 +33,7 @@ export default function WorkPage() {
               className="t-meta"
               style={{ color: "var(--mist)", display: "block", marginBottom: "var(--s-6)" }}
             >
-              Work — 2019–Now
+              Work
             </span>
             <h1
               className="t-display-lg"

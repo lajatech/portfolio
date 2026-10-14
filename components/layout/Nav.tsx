@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -40,54 +41,16 @@ export default function Nav() {
         className="container-wide flex items-center justify-between"
         style={{ paddingBlock: "18px" }}
       >
-        {/* Logo */}
-        <Link
-          href="/"
-          className="flex items-center gap-3 group"
-          aria-label="Làjà — home"
-        >
-          {/* Brand mark squircle */}
-          <div
-            style={{
-              width: 28,
-              height: 28,
-              background: "var(--veil)",
-              borderRadius: "var(--r-mark)",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <svg
-              viewBox="0 0 419 173"
-              width="18"
-              height="7"
-              aria-hidden="true"
-              style={{ fill: "var(--void)", display: "block" }}
-            >
-              <text
-                x="0"
-                y="140"
-                fontFamily="Special Gothic Expanded One, Archivo Black, sans-serif"
-                fontSize="160"
-                fill="var(--void)"
-              >
-                Là
-              </text>
-            </svg>
-          </div>
-          {/* Wordmark */}
-          <span
-            style={{
-              fontFamily: "var(--font-display)",
-              fontSize: "14px",
-              color: "var(--veil)",
-              letterSpacing: "-0.01em",
-              lineHeight: 1,
-            }}
-          >
-            Làjà
-          </span>
+        {/* Logo — single unified mark */}
+        <Link href="/" aria-label="Làjà — home">
+          <Image
+            src="/laja-icon.svg"
+            alt="Làjà"
+            width={40}
+            height={40}
+            style={{ borderRadius: "22%", display: "block" }}
+            priority
+          />
         </Link>
 
         {/* Nav links */}

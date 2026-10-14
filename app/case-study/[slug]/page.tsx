@@ -10,6 +10,7 @@ import ScreensGallery from "@/components/case-study/ScreensGallery";
 import ResultsSection from "@/components/case-study/ResultsSection";
 import TestimonialBlock from "@/components/case-study/TestimonialBlock";
 import NextProject from "@/components/case-study/NextProject";
+import CustomCursor from "@/components/ui/CustomCursor";
 
 export function generateStaticParams() {
   return caseStudies.map((cs) => ({ slug: cs.slug }));
@@ -42,6 +43,7 @@ export default async function CaseStudyPage({
 
   return (
     <div className="legacy">
+      <CustomCursor />
       <Nav />
       <main>
         <CaseStudyHeader cs={cs} />
