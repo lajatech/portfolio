@@ -260,9 +260,15 @@ export default function Recognition() {
                 cellRefs.current[i] = el;
               }}
             >
-              {/* no client logo files exist, so the initials carry the cell in
-                  display type. .cl-cell b is styled for precisely this. */}
-              <b>{cl.abbr}</b>
+              {/* The real mark where there is one, initials where there is not.
+                  The logos are white-on-transparent SVGs built for a dark
+                  ground, which is what this chapter is. */}
+              {cl.logo ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img className="cl-logo" src={cl.logo} alt="" aria-hidden="true" />
+              ) : (
+                <b>{cl.abbr}</b>
+              )}
               <span>{cl.name}</span>
             </div>
           ))}

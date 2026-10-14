@@ -28,13 +28,42 @@ const PALETTE: { c: string; t: string }[] = [
   { c: "#FC6A4B", t: "#101A5C" },
 ];
 
-/* Where each title breaks, and the 2 letters the fallback plate renders.
-   Keyed by slug so a reorder in lib/data.ts cannot silently mislabel a card. */
-const PRESENTATION: Record<string, { top: string; bottom: string; plate: string }> = {
-  neocash: { top: "Neo", bottom: "Cash", plate: "NC" },
-  estility: { top: "Esti", bottom: "lity", plate: "ES" },
-  profootball: { top: "Pro", bottom: "Football", plate: "PF" },
-  workergen: { top: "Worker", bottom: "gen", plate: "WG" },
+/* Where each title breaks, the hero shot, and the 2 letters the plate falls
+   back to when there is no shot. Keyed by slug so a reorder in lib/data.ts
+   cannot silently mislabel a card.
+
+   The images are the real product work from public/images. The card crops hard
+   (116% wide, 112% tall, object-fit cover) so each pick is a screen that still
+   reads when the edges are gone: a full-bleed interface rather than a mockup
+   with margins. */
+const PRESENTATION: Record<
+  string,
+  { top: string; bottom: string; plate: string; image?: string }
+> = {
+  neocash: {
+    top: "Neo",
+    bottom: "Cash",
+    plate: "NC",
+    image: "/images/neocash/06-new-dashboard.png",
+  },
+  estility: {
+    top: "Esti",
+    bottom: "lity",
+    plate: "ES",
+    image: "/images/estility/web-01-hero.webp",
+  },
+  profootball: {
+    top: "Pro",
+    bottom: "Football",
+    plate: "PF",
+    image: "/images/profootball/01-desktop-home.png",
+  },
+  workergen: {
+    top: "Worker",
+    bottom: "gen",
+    plate: "WG",
+    image: "/images/workergen/01-home.png",
+  },
 };
 
 /* Which of a case's own results to feature on the card, by index into its
@@ -77,6 +106,7 @@ const CASES: WorkCase[] = caseStudies.map((cs, i) => {
     // the problem line is the sharper read of the two; tagline is the backstop
     body: cs.problem || cs.tagline,
     stats: cs.results.slice(0, 3),
+    image: pres.image,
   };
 });
 

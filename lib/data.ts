@@ -311,12 +311,16 @@ export const snapshotProjects = [
   },
 ];
 
+/* `abbr` is the fallback for any client without a logo file, and the readable
+   name is always rendered alongside, since a mark on its own rarely says who
+   it is to someone who does not already know. */
 export const clients = [
-  { name: "Workergen", abbr: "WG" },
-  { name: "Volta Charger", abbr: "VC" },
-  { name: "Estility Ltd", abbr: "ES" },
-  { name: "Neo Cash", abbr: "NC" },
-  { name: "Àjọpaw", abbr: "AJ" },
+  { name: "Workergen", abbr: "WG", logo: "/logos/workergen.svg" },
+  { name: "Volta Charger", abbr: "VC", logo: "/logos/volta.svg" },
+  { name: "Estility Ltd", abbr: "ES", logo: "/logos/estility.svg" },
+  { name: "Neo Cash", abbr: "NC", logo: "/logos/neocash.svg" },
+  { name: "Àjọpaw", abbr: "AJ", logo: "/logos/ajopaw.svg" },
+  { name: "DukaCards", abbr: "DC", logo: "/logos/dukacards.svg" },
 ];
 
 export const careerTimeline = [
