@@ -28,14 +28,14 @@ const PALETTE: { c: string; t: string }[] = [
   { c: "#FC6A4B", t: "#101A5C" },
 ];
 
-/* Where each title breaks, the hero shot, and the 2 letters the plate falls
+/* Where each title breaks, the hero mockup, and the 2 letters the plate falls
    back to when there is no shot. Keyed by slug so a reorder in lib/data.ts
    cannot silently mislabel a card.
 
-   The images are the real product work from public/images. The card crops hard
-   (116% wide, 112% tall, object-fit cover) so each pick is a screen that still
-   reads when the edges are gone: a full-bleed interface rather than a mockup
-   with margins. */
+   The images are device mockups on transparent backgrounds. That is why the
+   card marks itself `data-shape="mockup"`: the default treatment crops a
+   screenshot to fill the panel, and cropping a device cuts the hardware in
+   half. A mockup is contained and floats on the card colour instead. */
 const PRESENTATION: Record<
   string,
   { top: string; bottom: string; plate: string; image?: string }
@@ -44,25 +44,25 @@ const PRESENTATION: Record<
     top: "Neo",
     bottom: "Cash",
     plate: "NC",
-    image: "/images/neocash/06-new-dashboard.png",
+    image: "/images/mockups/neocash.webp",
   },
   estility: {
     top: "Esti",
     bottom: "lity",
     plate: "ES",
-    image: "/images/estility/web-01-hero.webp",
+    image: "/images/mockups/estility.webp",
   },
   profootball: {
     top: "Pro",
     bottom: "Football",
     plate: "PF",
-    image: "/images/profootball/01-desktop-home.png",
+    image: "/images/mockups/profootball.webp",
   },
   workergen: {
     top: "Worker",
     bottom: "gen",
     plate: "WG",
-    image: "/images/workergen/01-home.png",
+    image: "/images/mockups/workergen.webp",
   },
 };
 
@@ -300,7 +300,7 @@ export default function Work() {
                   <i>→</i>
                 </button>
               </div>
-              <div className="case-img">
+              <div className="case-img" data-shape={cs.image ? "mockup" : "plate"}>
                 {cs.image ? (
                   // globals.css positions `.case-img img` directly; next/image would
                   // wrap it in a span and the parallax target would move.

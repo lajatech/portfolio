@@ -878,6 +878,23 @@ body[data-theme="yellow"] .pill { background: var(--navy); color: var(--yellow);
   letter-spacing: -0.02em;
 }
 
+/* A device mockup is not a screenshot. It arrives on a transparent ground, so
+   it must be contained and allowed to float on the card colour: the cover crop
+   above would slice the hardware in half. */
+.case-img[data-shape="mockup"] {
+  display: grid;
+  place-items: center;
+  padding: 34µ 26µ;
+}
+.case-img[data-shape="mockup"] img {
+  position: static;
+  inset: auto;
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  object-fit: contain;
+}
+
 .wk-progress {
   position: absolute;
   left: var(--gut);
@@ -1771,6 +1788,7 @@ html.noload #loader { display: none; }
   .case-metric small { font-size: 10px; }
   .case-btn { margin-top: 14px; font-size: 11px; padding: 0.8em 1em; }
   .case-plate b { font-size: 90px; }
+  .case-img[data-shape="mockup"] { padding: 14px 10px; }
   .wk-progress { bottom: 28px; left: 22px; right: 22px; }
 
   .process { height: 420vh; }
@@ -2125,6 +2143,28 @@ html.noload #loader { display: none; }
   max-width: 100%;
   object-fit: contain;
 }
+/* Same reasoning as the homepage cards: contain the device and let the row
+   colour carry the space around it. The box is squarer than the 4:3 used for
+   cropped screenshots, because a contained mockup wastes a wide box's corners. */
+.pg-row-media[data-shape="mockup"] {
+  display: grid;
+  place-items: center;
+  padding: 36µ;
+  aspect-ratio: 5 / 4;
+  /* No panel behind a mockup. The base rule tints the media box so a cropped
+     screenshot has an edge, but a transparent device wants the row's own
+     colour around it, not a grey rectangle it visibly sits on. */
+  background: none;
+}
+.pg-row-media[data-shape="mockup"] img {
+  position: static;
+  inset: auto;
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  object-fit: contain;
+}
+
 .pg-row-alt .pg-row-media { order: 2; }
 
 .pg-arrow {
@@ -2545,6 +2585,7 @@ html.noload #loader { display: none; }
   .pg-row-alt .pg-row-media { order: 0; }
   .pg-row-media { aspect-ratio: 16 / 11; }
   .pg-row-media[data-shape="phone"] { padding: 22px; aspect-ratio: 4 / 3; }
+  .pg-row-media[data-shape="mockup"] { padding: 18px; aspect-ratio: 4 / 3; }
   .pg-arrow { margin-top: 22px; font-size: 11px; padding: 0.85em 1.1em; }
 
   .pg-grid, .pg-caps { grid-template-columns: 1fr; margin-top: 34px; }

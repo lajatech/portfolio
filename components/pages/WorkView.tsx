@@ -23,30 +23,32 @@ const PALETTE: ReadonlyArray<{ c: string; t: string }> = [
 ];
 
 /* Hero shot per case, keyed by slug so a reorder in lib/data.ts cannot
-   mislabel a row. These are the same files the case study gallery uses.
-   `shape` is the only presentational decision: a 16:9 product shot crops to
-   the row box, a 9:19 phone export cannot and is contained on a plate instead.
-   NeoCash shipped as a phone app, so every export it has is portrait. */
-const HERO: Record<string, { src: string; alt: string; shape: "wide" | "phone" }> = {
+   mislabel a row.
+
+   These are device mockups with transparent backgrounds, which is why `shape`
+   is "mockup" rather than "wide": a flat screenshot can be cropped to the row
+   box, but cropping a device cuts the hardware in half. Mockups are contained
+   and float on the row's colour instead, and the transparency is the point. */
+const HERO: Record<string, { src: string; alt: string; shape: "wide" | "phone" | "mockup" }> = {
   neocash: {
-    src: "/images/neocash/06-new-dashboard.png",
-    alt: "NeoCash redesigned dashboard, with loan status front and centre",
-    shape: "phone",
+    src: "/images/mockups/neocash.webp",
+    alt: "The NeoCash app on a phone, showing loan balance and loan status",
+    shape: "mockup",
   },
   estility: {
-    src: "/images/estility/web-01-hero.webp",
-    alt: "Estility website homepage after the redesign",
-    shape: "wide",
+    src: "/images/mockups/estility.webp",
+    alt: "The Estility website on a laptop",
+    shape: "mockup",
   },
   profootball: {
-    src: "/images/profootball/01-desktop-home.png",
-    alt: "ProFootball desktop home, showing the gamified feed",
-    shape: "wide",
+    src: "/images/mockups/profootball.webp",
+    alt: "The ProFootball platform on a tablet, showing the gamified feed",
+    shape: "mockup",
   },
   workergen: {
-    src: "/images/workergen/01-home.png",
-    alt: "Workergen homepage, the AI agent marketplace",
-    shape: "wide",
+    src: "/images/mockups/workergen.webp",
+    alt: "The Workergen marketplace on a tablet",
+    shape: "mockup",
   },
 };
 
