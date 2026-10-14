@@ -127,6 +127,8 @@ const lerpRig = (out: CameraRig, a: CameraRig, b: CameraRig, t: number) => {
   // layout at every chapter boundary instead of travelling with the camera
   out.sx = lerp(a.sx, b.sx, t);
   out.sy = lerp(a.sy, b.sy, t);
+  out.psx = lerp(a.psx, b.psx, t);
+  out.psy = lerp(a.psy, b.psy, t);
 };
 
 /**
@@ -377,7 +379,7 @@ export default function ClayScene() {
           materials,
           texture,
           pose: { p: [0, 0, 0], r: [0, 0, 0], s: 1 },
-          rig: { t: [0, 0, 0], d: 1, az: 0, el: 0, fov: 24, sx: 0.5, sy: 0.5 },
+          rig: { t: [0, 0, 0], d: 1, az: 0, el: 0, fov: 24, sx: 0.5, sy: 0.5, psx: 0.5, psy: 0.5 },
           target: new THREE.Vector3(),
           projected: new THREE.Vector3(),
           width: window.innerWidth,

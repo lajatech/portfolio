@@ -18,7 +18,7 @@ const manrope = Manrope({
   display: "swap",
 });
 
-const siteUrl = "https://laja.design";
+const siteUrl = "https://muizadelaja.online";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),

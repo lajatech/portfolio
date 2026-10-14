@@ -164,6 +164,17 @@ export type CameraRig = {
    */
   sx: number;
   sy: number;
+  /**
+   * Where the target sits on a portrait viewport, as plain screen fractions.
+   *
+   * Portrait cannot reuse the landscape fractions. A phone stacks the type
+   * vertically, so the sculpture has to find a band of its own between the
+   * headline and the copy rather than sitting off to one side. One blanket
+   * value does not work either: the hero needs it high to clear the copy and
+   * the button, while the manifesto wants it centred behind the text.
+   */
+  psx: number;
+  psy: number;
 };
 
 export type RigId = "hero" | "burst" | "services" | "process" | "contact";
@@ -171,11 +182,16 @@ export type RigId = "hero" | "burst" | "services" | "process" | "contact";
 export const RIGS: Record<RigId, CameraRig> = {
   // hero sits right of centre and low, leaving the top-left clear for the
   // headline, which is the whole reason the chapter reads at all
-  hero: { t: [0, 0, 0], d: 17.755, az: 0, el: 0.2028, fov: 24, sx: 0.7031, sy: 0.6806 },
-  burst: { t: [0, 0, 0], d: 21, az: 0, el: 0.02, fov: 26, sx: 0.5, sy: 0.5 },
-  services: { t: [0, 0, 0], d: 22, az: 0, el: 0, fov: 26, sx: 0.5, sy: 0.5 },
-  process: { t: [0.15, 1.3, 0], d: 18.5, az: 0, el: 0.22, fov: 24, sx: 0.69, sy: 0.55 },
-  contact: { t: [0.15, 1.35, 0], d: 21.5, az: 0, el: 0.2, fov: 24, sx: 0.795, sy: 0.39 },
+  // The phone hero stacks headline, then a gap, then copy and button. psy
+  // aims the sculpture at that gap: lower and it sits on the copy, higher and
+  // it sits inside the headline.
+  hero: { t: [0, 0, 0], d: 17.755, az: 0, el: 0.2028, fov: 24, sx: 0.7031, sy: 0.6806, psx: 0.5, psy: 0.63 },
+  burst: { t: [0, 0, 0], d: 21, az: 0, el: 0.02, fov: 26, sx: 0.5, sy: 0.5, psx: 0.5, psy: 0.5 },
+  // the capability cards fill the lower two thirds of a phone screen
+  services: { t: [0, 0, 0], d: 22, az: 0, el: 0, fov: 26, sx: 0.5, sy: 0.5, psx: 0.5, psy: 0.34 },
+  // the process steps occupy the bottom half, the title the top
+  process: { t: [0.15, 1.3, 0], d: 18.5, az: 0, el: 0.22, fov: 24, sx: 0.69, sy: 0.55, psx: 0.5, psy: 0.34 },
+  contact: { t: [0.15, 1.35, 0], d: 21.5, az: 0, el: 0.2, fov: 24, sx: 0.795, sy: 0.39, psx: 0.5, psy: 0.3 },
 };
 
 /**
@@ -192,7 +208,7 @@ export const framing = (
   height: number,
   portrait: boolean,
 ): { sx: number; sy: number } => {
-  if (portrait) return { sx: 0.5, sy: rig.sy > 0.5 ? 0.6 : 0.54 };
+  if (portrait) return { sx: rig.psx, sy: rig.psy };
   const u = Math.min(width / 2048, height / 1152);
   return {
     sx: 1 - (2048 * (1 - rig.sx) * u) / width,

@@ -1724,11 +1724,34 @@ html.noload #loader { display: none; }
     bottom: 28px;
     gap: 12px;
   }
-  .sv-card { min-height: 0; padding: 120px 16px 18px; border-radius: 18px; }
-  .sv-card .sv-slot { top: 62px; }
-  .sv-card h3 { font-size: 30px; }
-  .sv-card p, .pr-steps p { font-size: 13px; }
-  .sv-more { font-size: 11px; opacity: 1; transform: none; top: 8px; padding: 0.8em 1em; }
+  /* The 120px of top padding here reserved room for a sculpture piece to sit
+     inside each card. That placement is a desktop idea: on a phone the scene
+     is centred behind the whole grid, not slotted per card, so the padding was
+     only making the cards tall enough to collide with the heading above. */
+  .sv-card { min-height: 0; padding: 16px 14px 16px; border-radius: 18px; }
+  .sv-card .sv-slot { display: none; }
+  /* Transparent cards work on desktop, where the sculpture sits off to one
+     side. Centred behind the grid on a phone it runs straight through the
+     copy, so the cards take a translucent fill and lift the text off it. */
+  .sv-card {
+    /* A tint of the chapter ground, deep enough that the sculpture reads as a
+       soft shape behind the card rather than as competing detail inside the
+       copy. The fill carries this on its own rather than relying on
+       backdrop-filter: the reveal writes an inline opacity on these cards,
+       which suppresses the backdrop in practice, and a card that is only
+       legible when a filter happens to apply is not legible. */
+    background: rgba(197, 70, 46, 0.82);
+    border-color: rgba(255, 255, 255, 0.72);
+    /* kept as progressive enhancement where it does take effect */
+    backdrop-filter: blur(8px) saturate(1.1);
+    -webkit-backdrop-filter: blur(8px) saturate(1.1);
+  }
+  .sv-card.open, .sv-card:focus-within { background: rgba(176, 58, 36, 0.92); }
+  /* "RESEARCH" and "LEADERSHIP" are wider than a half-width card at 30px, and
+     Anton does not hyphenate, so the long words were running past the edge. */
+  .sv-card h3 { font-size: 25px; overflow-wrap: anywhere; }
+  .sv-card p, .pr-steps p { font-size: 12.5px; }
+  .sv-more { font-size: 11px; opacity: 1; transform: none; top: 6px; padding: 0.7em 0.9em; }
   .sv-card::after, .case-info::before, .case h3 br { display: none; }
 
   .wk-head { padding: 96px 22px 0; }
@@ -1755,7 +1778,10 @@ html.noload #loader { display: none; }
   .pr-title { font-size: min(13vw, 76px); }
   .pr-steps { left: 22px; right: 22px; width: auto; bottom: 30px; }
   .pr-steps li { grid-template-columns: 56px 1fr; padding: 12px 0; }
-  .pr-n { font-size: 40px; }
+  /* 0.8em masks the digit roll, but at this size it also shaves the curve off
+     0, 2 and 4. A full em still hides the incoming digit and shows the whole
+     glyph. */
+  .pr-n { font-size: 40px; height: 1em; }
   .pr-steps h3 { font-size: 24px; }
   .pr-steps li:not(.on) p { display: none; }
   .pr-scan { display: none; }
@@ -1776,6 +1802,13 @@ html.noload #loader { display: none; }
   .aw-p { display: none; }
   .aw-n, .md-stats b { font-size: 30px; }
   .aw-sh { width: 22px; height: 22px; }
+
+  /* On desktop the contact camera pushes the sculpture to the right, clear of
+     the form. A phone has no room for that, so it lands centred behind the
+     inputs and the placeholder text becomes unreadable. The sculpture is
+     decoration and the form is the job, so it steps back here. `--nav-fg`
+     keeps the chapter's own colour logic untouched. */
+  body[data-theme="yellow"] #gl { opacity: 0.18; }
 
   .ct-in { padding: 110px 22px 60px; }
   .ct-title { font-size: min(15vw, 96px); width: 100%; }
